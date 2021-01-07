@@ -1,3 +1,3 @@
 # Sonkrag
 
-![UML](DESIGN.png)
+![UML](docs/images/DESIGN.png)
