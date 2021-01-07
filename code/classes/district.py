@@ -16,14 +16,18 @@ class District ():
         """
         load all houses
         """
-        houses = []
+        houses = {}
+        house_id = 1
 
+        #
         with open(source_house, 'r') as houses_file:
             reader = csv.DictReader(houses_file)
-
+            
+            #
             for row in reader:
                 values = row.split[',']
-                houses.append(House(values[0], values[0], values[2]))
+                houses[house_id] = House(house_id, values[0], values[1], values[2])
+                house_id += 1
         
         return houses
 
@@ -33,13 +37,16 @@ class District ():
         load all batteries
         """
         batteries = []
+        battery_id = 1
 
+        #
         with open(source_battery, 'r') as batteries_file:
             reader = csv.DictReader(batteries_file)
 
+            #
             for row in reader:
                 values = row.split[',']
-                coordinaten = values[0].split[',']
-                batteries.append(Battery(coordinaten[0], coordinaten[1], values[1]))
+                batteries[battery_id] = Battery(battery_id, values[0], values[1], values[2])
+                battery_id +=1
         
         return batteries
