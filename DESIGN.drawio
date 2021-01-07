@@ -1,0 +1,65 @@
+<mxfile host="65bd71144e" modified="2021-01-07T11:46:50.553Z" agent="5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.52.1 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36" version="13.10.0" etag="JMaM_yyLNhNU4q8hOOH2" type="embed">
+    <diagram id="4yuQjZG0tCIBft11f3yt" name="UML_Sonkrag">
+        <mxGraphModel dx="686" dy="496" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="12" value="House" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="120" width="160" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="id: int&#10;x-coordinate: int&#10;y-coordinate: int&#10;output: floats&#10;cables: []" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="12">
+                    <mxGeometry y="26" width="160" height="94" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="Methods:&#10;&#10;add_cable(self, x, y)&#10;" style="text;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;strokeColor=#f0f0f0;" vertex="1" parent="12">
+                    <mxGeometry y="120" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="Battery" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;spacingTop=1;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="420" width="230" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="id: int&#10;x-coordinate: int&#10;y-coordinate:int&#10;capacity: int&#10;max: int&#10;houses: [House]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="16">
+                    <mxGeometry y="26" width="230" height="114" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="Methods: &#10;&#10;add_house(self, location, output, cables)&#10;&#10;&#10;" style="text;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;strokeColor=#f0f0f0;" vertex="1" parent="16">
+                    <mxGeometry y="140" width="230" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="District" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;strokeColor=#f0f0f0;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="190" width="240" height="252" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="id: int&#10;cost shared: int&#10;batteries: [Battery]&#10;houses: [House]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="25">
+                    <mxGeometry y="26" width="240" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="Method:&#10;&#10;load_houses(self, source_file): [House]&#10;load_batteries(self, source_file): [Battery]" style="text;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;strokeColor=#f0f0f0;" vertex="1" parent="25">
+                    <mxGeometry y="100" width="240" height="152" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="516" y="430" as="sourcePoint"/>
+                        <mxPoint x="403" y="200" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="460" y="430"/>
+                            <mxPoint x="460" y="200"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="37" value="0..n" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="460" y="280" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="0..n" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="450" y="110" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="515" y="131" as="sourcePoint"/>
+                        <mxPoint x="440" y="200" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="440" y="131"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="41" value="&quot;houses&quot;: [ {location: values. output: values, cables: [values]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="220" y="500" width="180" height="70" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
