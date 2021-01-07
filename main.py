@@ -1,7 +1,16 @@
 from code.classes import district, house, battery
 
-if _name__ == "__main__":
+if __name__ == "__main__":
 
-    data_district = "data/district_{variable}/district-{variable}_houses.csv"
-    data_batteries = "data/district_{variable}/district-{variable}_batteries.csv"
+    current_district = 1
+
+    # Create a graph from our data
+    data_district = f"data/district_{current_district}/district-{current_district}_houses.csv"
+    data_batteries = f"data/district_{current_district}/district-{current_district}_batteries.csv"
+
+    district = district.District(data_district, data_batteries)
+
+    # --------------------------- Algoritmes ---------------------------------------
+
+    # --------------------------- Visualisation --------------------------------
     
