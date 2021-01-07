@@ -1,3 +1,3 @@
 # Sonkrag
 
-![UML](DESIGN.drawio)
+![UML](DESIGN.png)
