@@ -7,15 +7,17 @@ class Battery():
         self.used_cap = 0
         self.houses = []
 
+
     def add_house(self, house): #location, output, cables
         
-        #
+        # adds a new house
         self.houses.append(house)
         self.used_cap += house.output
 
+
     def capacitycheck(self, output):
 
-        #
+        # setting a cap on the battery
         new_used_cap = self.used_cap + output
         return new_used_cap < self.max_cap
 
