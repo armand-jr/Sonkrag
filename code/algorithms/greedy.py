@@ -15,10 +15,9 @@ class Greedy:
         houses = self.district.houses
         batteries = self.district.batteries
         for house in houses:
-            battery = self.closest_battery(house, batteries)
-            battery.add_house(house)
-            print(battery.houses)
-            self.cable_to_battery(house, battery)
+            battery = self.closest_battery(houses.get(house), batteries)
+            battery.add_house(houses.get(house))
+            self.cable_to_battery(houses.get(house), battery)
 
     def closest_battery(self, house, batteries):
         """
@@ -27,14 +26,15 @@ class Greedy:
         shortest_distance = 0
         nearest_battery = None
         for battery in batteries:
-            distance = abs(battery.x_cor - house.x_cor) + abs(battery.y_cor - house.y_cor)
+            distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
             if shortest_distance == 0:
                 shortest_distance = distance
+                nearest_battery = batteries.get(battery)
             else:
                 if distance < shortest_distance:
                     shortest_distance = distance
-                    nearest_battery = battery
-                
+                    nearest_battery = batteries.get(battery)
+        
         return nearest_battery
 
     def cable_to_battery(self, house, battery):
@@ -69,12 +69,11 @@ class Greedy:
         batteries = self.district.batteries
         total_cost = 0
         for battery in batteries:
-            houses = battery.houses
+            houses = batteries.get(battery).houses
             for house in houses:
-                distance = abs(battery.x_cor - house.x_cor) + abs(battery.y_cor - house.y_cor)
+                distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
                 total_cost += distance * self.cable_cost
 
-        print(total_cost)
         self.district.cost_shared = total_cost
 
     def __repr__(self):

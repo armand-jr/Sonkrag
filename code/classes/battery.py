@@ -20,4 +20,4 @@ class Battery():
         return new_used_cap < self.max_cap
 
     def __repr__(self):
-        return self.max_cap
+        return str(self.max_cap)

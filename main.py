@@ -1,4 +1,5 @@
 from code.classes import district, house, battery
+from code.algorithms import greedy
 
 if __name__ == "__main__":
 
@@ -10,10 +11,14 @@ if __name__ == "__main__":
     
     district = district.District(data_houses, data_batteries)
 
-    print(district)
+    #print(district)
 
 
     # --------------------------- Algoritmes ---------------------------------------
+    answer = greedy.Greedy(district, 9)
+    answer.house_loop()
+    answer.total_cost()
+    print(answer)
 
     # --------------------------- Visualisation --------------------------------
     
