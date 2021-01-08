@@ -1,6 +1,6 @@
 class House():
-    def __init__(self, id, x_cor, y_cor, output): #, cables
-        self.id = id
+    def __init__(self, uid, x_cor, y_cor, output): #, cables
+        self.id = str(uid)
         self.x_cor = x_cor
         self.y_cor = y_cor
         self.output = output

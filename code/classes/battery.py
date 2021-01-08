@@ -1,10 +1,10 @@
 class Battery():
-    def __init__(self, id, x_cor, y_cor, max_cap, used_cap, houses):
-        self.id = id
+    def __init__(self, uid, x_cor, y_cor, max_cap):
+        self.id = str(uid)
         self.x_cor = x_cor
         self.y_cor = y_cor
         self.max_cap = max_cap
-        self.used_cap = used_cap
+        self.used_cap = 0
         self.houses = []
 
     def add_house(self, house): #location, output, cables
@@ -20,4 +20,4 @@ class Battery():
         return new_used_cap < self.max_cap
 
     def __repr__(self):
-        return self.id
+        return self.max_cap
