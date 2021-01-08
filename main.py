@@ -16,10 +16,10 @@ if __name__ == "__main__":
 
 
     # --------------------------- Algoritmes ---------------------------------------
-    # answer = greedy.Greedy(district, 9)
-    # answer.house_loop()
-    # answer.total_cost()
-    # print(answer)
+    answer = greedy.Greedy(district, 9)
+    answer.house_loop()
+    answer.total_cost()
+    print(answer)
 
     # --------------------------- Visualisation --------------------------------
     vis.visualise(district)
