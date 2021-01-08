@@ -17,8 +17,16 @@ def visualise(district):
     bat_x = [38, 43, 42, 49, 3]
     bat_y = [12, 13, 3, 23, 45]
 
+
     house_x_cor = []
     house_y_cor = []
+
+    district.houses = houses
+    houses = self.district.houses
+        batteries = self.district.batteries
+
+    for house in houses:
+        houses.get(house)
 
     house_x_cor.append(row[0])
     house_y_cor.append(row[1])
