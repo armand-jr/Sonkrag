@@ -1,9 +1,9 @@
 class House():
     def __init__(self, uid, x_cor, y_cor, output): #, cables
         self.id = str(uid)
-        self.x_cor = x_cor
-        self.y_cor = y_cor
-        self.output = output
+        self.x_cor = int(x_cor)
+        self.y_cor = int(y_cor)
+        self.output = float(output)
         self.cables = []
 
     def add_cable(self, x_cor, y_cor):

@@ -1,9 +1,9 @@
 class Battery():
     def __init__(self, uid, x_cor, y_cor, max_cap):
         self.id = str(uid)
-        self.x_cor = x_cor
-        self.y_cor = y_cor
-        self.max_cap = max_cap
+        self.x_cor = int(x_cor)
+        self.y_cor = int(y_cor)
+        self.max_cap = float(max_cap)
         self.used_cap = 0
         self.houses = []
 
@@ -11,7 +11,7 @@ class Battery():
         
         #
         self.houses.append(house)
-        self.used_cap.append(house.output)
+        self.used_cap += house.output
 
     def capacitycheck(self, output):
 
