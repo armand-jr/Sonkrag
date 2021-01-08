@@ -4,7 +4,7 @@ from code.visualisation import visualise as vis
 
 if __name__ == "__main__":
 
-    current_district = str(1)
+    current_district = str(3)
 
     # Create a graph from our data
     data_houses = f"data/houses&batteries/district_{current_district}/district-{current_district}_houses.csv"
@@ -15,11 +15,11 @@ if __name__ == "__main__":
     #print(district)
 
 
-    # --------------------------- Algoritmes ---------------------------------------
+    # --------------------------- Algoritmes -----------------------------------
     answer = greedy.Greedy(district, 9)
     answer.house_loop()
     answer.total_cost()
-    print(answer)
+    # print(answer)
 
     # --------------------------- Visualisation --------------------------------
     vis.visualise(district)

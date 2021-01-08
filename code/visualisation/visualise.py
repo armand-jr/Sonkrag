@@ -3,15 +3,15 @@ import numpy as np
 import csv
  
 def visualise(district):
-    fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1)
-    major_ticks = np.arange(0, 51, 10)
-    minor_ticks = np.arange(0, 51, 1)
+    # fig = plt.figure()
+    # ax = fig.add_subplot(1, 1, 1)
+    # major_ticks = np.arange(0, 51, 10)
+    # minor_ticks = np.arange(0, 51, 1)
 
-    ax.set_xticks(major_ticks)
-    ax.set_xticks(minor_ticks, minor=True)
-    ax.set_yticks(major_ticks)
-    ax.set_yticks(minor_ticks, minor=True)
+    # ax.set_xticks(major_ticks)
+    # ax.set_xticks(minor_ticks, minor=True)
+    # ax.set_yticks(major_ticks)
+    # ax.set_yticks(minor_ticks, minor=True)
 
 
     house_x_cor = []
@@ -41,22 +41,18 @@ def visualise(district):
             yvalues = [int(point1[1]), int(point2[1])]
             plt.plot(xvalues, yvalues, 'C1')
 
-    # print(f"Huis x-coordinaten: {house_x_cor}")
-    # print(f"Huis y-coordinaten: {house_y_cor}")
 
     for battery in batteries:
         battery_x_cor.append(batteries.get(battery).x_cor)
         battery_y_cor.append(batteries.get(battery).y_cor)
 
-    # print(f"Batterij x-coordinaten: {battery_x_cor}")
-    # print(f"Batterij y-coordinaten: {battery_y_cor}")
 
     x = list(range(0, 51))
     y = list(range(0, 51))
-    plt.yticks(y)
-    plt.xticks(x)
+    plt.yticks(y, fontsize=6)
+    plt.xticks(x, fontsize=6)
 
-    plt.axis([-5, 55, -5, 55])
+    plt.axis([-3, 53, -3, 53])
     plt.scatter(battery_x_cor, battery_y_cor, marker='s', c='green', s=100, edgecolors='black')
     plt.scatter(house_x_cor, house_y_cor, c='red')
     plt.grid(True)

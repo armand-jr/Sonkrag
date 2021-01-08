@@ -8,7 +8,7 @@ class Battery():
         self.houses = []
 
 
-    def add_house(self, house): #location, output, cables
+    def add_house(self, house): 
         
         # adds a new house
         self.houses.append(house)
