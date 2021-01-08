@@ -13,38 +13,51 @@ def visualise(district):
     ax.set_yticks(major_ticks)
     ax.set_yticks(minor_ticks, minor=True)
 
-    # batteries location
-    #bat_x = [38, 43, 42, 49, 3]
-    #bat_y = [12, 13, 3, 23, 45]
-
 
     house_x_cor = []
     house_y_cor = []
     battery_x_cor = []
     battery_y_cor = []
+    cables = []
 
     houses = district.houses
     batteries = district.batteries
 
     for house in houses:
+        cables.append(houses.get(house).cables)
         house_x_cor.append(houses.get(house).x_cor)
         house_y_cor.append(houses.get(house).y_cor)
-    print(f"Huis x-coordinaten: {house_x_cor}")
-    print(f"Huis y-coordinaten: {house_y_cor}")
+
+    
+
+    for cablelist in cables:
+        for index in range(len(cablelist)-1):
+
+            point1 = cablelist[index]
+            point1  = point1.split(',')
+            point2 = cablelist[index + 1]
+            point2 = point2.split(',')
+            xvalues = [int(point1[0]), int(point2[0])]
+            yvalues = [int(point1[1]), int(point2[1])]
+            plt.plot(xvalues, yvalues, 'C1')
+
+    # print(f"Huis x-coordinaten: {house_x_cor}")
+    # print(f"Huis y-coordinaten: {house_y_cor}")
 
     for battery in batteries:
         battery_x_cor.append(batteries.get(battery).x_cor)
         battery_y_cor.append(batteries.get(battery).y_cor)
-    print(f"Batterij x-coordinaten: {battery_x_cor}")
-    print(f"Batterij y-coordinaten: {battery_y_cor}")
+
+    # print(f"Batterij x-coordinaten: {battery_x_cor}")
+    # print(f"Batterij y-coordinaten: {battery_y_cor}")
 
     x = list(range(0, 51))
     y = list(range(0, 51))
     plt.yticks(y)
     plt.xticks(x)
 
-    plt.axis([0, 50, 0, 50])
-    plt.scatter(battery_x_cor, battery_y_cor, marker='s', c='green')
+    plt.axis([-5, 55, -5, 55])
+    plt.scatter(battery_x_cor, battery_y_cor, marker='s', c='green', s=100, edgecolors='black')
     plt.scatter(house_x_cor, house_y_cor, c='red')
     plt.grid(True)
     plt.tight_layout()

@@ -56,7 +56,7 @@ class Greedy:
             y_direction = -1
         else:
             y_direction = 1
-        while x_cor != battery.x_cor:
+        while y_cor != battery.y_cor:
             house.add_cable(x_cor, y_cor)
             y_cor += y_direction
 

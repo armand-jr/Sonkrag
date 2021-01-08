@@ -9,7 +9,7 @@ class House():
     def add_cable(self, x_cor, y_cor):
         
         #
-        self.cables.append(f"{x_cor}, {y_cor}")
+        self.cables.append(f"{x_cor},{y_cor}")
 
     def __repr__(self):
         return self.id
