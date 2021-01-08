@@ -26,14 +26,16 @@ class Greedy:
         shortest_distance = 0
         nearest_battery = None
         for battery in batteries:
-            distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
-            if shortest_distance == 0:
-                shortest_distance = distance
-                nearest_battery = batteries.get(battery)
-            else:
-                if distance < shortest_distance:
+            if batteries.get(battery).capacitycheck(house.output):
+                distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
+
+                if shortest_distance == 0:
                     shortest_distance = distance
                     nearest_battery = batteries.get(battery)
+                else:
+                    if distance < shortest_distance:
+                        shortest_distance = distance
+                        nearest_battery = batteries.get(battery)
         
         return nearest_battery
 
