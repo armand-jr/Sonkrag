@@ -1,6 +1,9 @@
 from code.classes import district, house, battery
-from code.algorithms import greedy
+from code.algorithms import greedy, random
 from code.visualisation import visualise as vis
+
+# Constants
+CABLECOST = 9
 
 if __name__ == "__main__":
 
@@ -16,7 +19,10 @@ if __name__ == "__main__":
 
 
     # --------------------------- Algoritmes -----------------------------------
-    answer = greedy.Greedy(district, 9)
+    # greedy algorithm
+    # answer = greedy.Greedy(district, CABLECOST)
+    # random algorithm
+    answer = random.Random(district, CABLECOST)
     answer.house_loop()
     answer.total_cost()
     # print(answer)
