@@ -1,0 +1,69 @@
+houses = self.district.houses
+        batteries = self.district.batteries
+        # houses_list = []
+        houses_list2 = []
+        for house in houses: 
+            houses_list2.append(houses.get(house))
+
+        wrong_assignments1 = 0
+        while True: 
+            """
+            kabels weghalen
+            huizen van batterijen loskoppelen
+            used cap 0
+
+            """
+            
+            houses_list = copy.deepcopy(houses_list2)
+            for battery in batteries:
+                # self.battery.used_cap = 0
+                print(f" battery nr {battery}")
+                while True:
+                    random_house = random.choice(houses_list)
+                    if not batteries.get(battery).capacitycheck(random_house.output):
+                        wrong_assignments += 1
+                    else:
+                        wrong_assignments = 0
+
+                        batteries.get(battery).add_house(random_house)
+                        self.cable_to_battery(random_house, batteries.get(battery))
+                        houses_list.remove(random_house)
+
+                    if wrong_assignments == 10:
+                        break
+
+                    if len(houses_list) == 0: 
+                        break
+            
+             
+            if len(houses_list) > 0:
+                wrong_assignments1 += 1
+
+            # else:
+            #     wrong_assignments1 = 0
+
+            if wrong_assignments1 == 5:
+                print("no good answer found")
+                break
+
+            if len(houses_list) == 0: 
+                break
+
+            for battery in batteries:
+                for houses in batteries.get(battery).houses:
+                    houses.cables = []
+                batteries.get(battery).houses = []
+                batteries.get(battery).used_cap = 0
+
+        print(f"not assigned: {houses_list}")
+            
+
+
+        # for house in houses:
+        #     while True:
+        #         battery = random.choice(list(batteries.values()))
+        #         battery.add_house(houses.get(house))
+        #         if battery.capacitycheck():
+        #             break
+        #     do battery =.......
+        #     while !battery.capacitycheck()

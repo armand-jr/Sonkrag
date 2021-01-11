@@ -1,5 +1,5 @@
 from code.classes import district, house, battery
-import random
+import random, copy
 
 class Random:
     """
@@ -9,39 +9,25 @@ class Random:
         self.district = district
         self.cable_cost = cable_cost
     
+        
+
+
     def house_loop(self):
-        """
-        Loops through all houses, assigning to random battery and finding shortest cable to it
-        """
         houses = self.district.houses
         batteries = self.district.batteries
-        houses_list = []
-        for house in houses: 
-            houses_list.append(houses.get(house))
+        amount = 0
+        for house in houses:
+            amount += 1
+            battery = random.choice(list(batteries.values()))
+            battery.add_house(houses.get(house))
+            self.cable_to_battery(houses.get(house), battery)
+        print(f"amount: {amount}")
 
-        for battery in batteries:
-            print(f" battery nr {battery}")
-            while True:
-                if len(houses_list) == 0: 
-                    break
-                random_house = random.choice(houses_list)
-                print(random_house) 
-                if not batteries.get(battery).capacitycheck(random_house.output):
-                    break 
-                batteries.get(battery).add_house(random_house)
-                # self.cable_to_battery(random_house, batteries.get(battery))
-                houses_list.remove(random_house)
+        for i in batteries:
+            print(batteries.get(i).used_cap)
+
+        # print(f"{houses}")
             
-        # for house in houses:
-        #     while True:
-        #         battery = random.choice(list(batteries.values()))
-        #         battery.add_house(houses.get(house))
-        #         if battery.capacitycheck():
-        #             break
-        #     do battery =.......
-        #     while !battery.capacitycheck()
-            
-    # def cap_check(self)
 
     def cable_to_battery(self, house, battery):
         """
