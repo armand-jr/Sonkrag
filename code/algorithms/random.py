@@ -41,9 +41,6 @@ class Random:
         #     do battery =.......
         #     while !battery.capacitycheck()
             
-            
-            
-
     # def cap_check(self)
 
     def cable_to_battery(self, house, battery):
