@@ -1,4 +1,5 @@
 from code.classes import district, house, battery
+import random
 
 class Greedy:
     """
@@ -19,6 +20,30 @@ class Greedy:
             battery.add_house(houses.get(house))
             self.cable_to_battery(houses.get(house), battery)
 
+    # def switch_house(self, house, batteries):
+    #     for battery in batteries:
+    #         if batteries.get(battery).used_cap > batteries.get(battery).max_cap:
+    #             nearest_battery = random.choice(list(batteries.values()))
+
+
+    # this can be more efficient
+    def least_used_cap(self, batteries):
+        # excess_cap = {}
+
+        rest_value = 0
+        battery_biggest_rest = None
+        for battery in batteries:
+            if batteries.get(battery).max_cap - batteries.get(battery).used_cap > rest_value:
+                rest_value = batteries.get(battery).max_cap - batteries.get(battery).used_cap
+                battery_biggest_rest = batteries.get(battery)
+        return battery_biggest_rest
+
+
+        # for battery in batteries:
+        #     batteries.get(battery).max_cap - batteries.get(battery).used_cap:
+
+
+
     def closest_battery(self, house, batteries):
         """
         Seeks for the battery with the closest distance to the house
@@ -36,7 +61,9 @@ class Greedy:
                     if distance < shortest_distance:
                         shortest_distance = distance
                         nearest_battery = batteries.get(battery)
-        
+        if nearest_battery == None:
+            nearest_battery = self.least_used_cap(batteries)
+
         return nearest_battery
 
     def cable_to_battery(self, house, battery):
