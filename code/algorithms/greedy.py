@@ -5,9 +5,11 @@ class Greedy:
     """
     The Greedy class that assigns the best possible value to each node one by one.
     """
-    def __init__(self, district, cable_cost):
+    def __init__(self, district, cable_cost, battery_cost):
         self.district = district
         self.cable_cost = cable_cost
+        self.battery_cost = battery_cost
+    
     
     
     def house_loop(self):
