@@ -20,12 +20,24 @@ if __name__ == "__main__":
 
     # --------------------------- Algoritmes -----------------------------------
     # greedy algorithm
+    """
+    Greedy algorithm
+    """
     # answer = greedy.Greedy(district, CABLECOST)
-    # random algorithm
+    # answer.house_loop()
+    # answer.change_battery()
+    # answer.swap_houses()
+    # answer.total_cost()
+    """
+    Random algorithm
+    """
     answer = random.Random(district, CABLECOST)
     answer.house_loop()
+    answer.change_battery()
+    answer.swap_houses()
     answer.total_cost()
-    # print(answer)
+    
+    print(answer)
 
     # --------------------------- Visualisation --------------------------------
-    vis.visualise(district)
+    #vis.visualise(district)

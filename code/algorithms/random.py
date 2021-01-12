@@ -8,19 +8,22 @@ class Random:
     def __init__(self, district, cable_cost):
         self.district = district
         self.cable_cost = cable_cost
-    
         
 
-
     def house_loop(self):
+        """
+        Loops trough all houses and assigns a random battery
+        """
         houses = self.district.houses
         batteries = self.district.batteries
         amount = 0
+
         for house in houses:
             amount += 1
             battery = random.choice(list(batteries.values()))
             battery.add_house(houses.get(house))
             self.cable_to_battery(houses.get(house), battery)
+        
         print(f"amount: {amount}")
 
         for i in batteries:
@@ -28,6 +31,77 @@ class Random:
 
         # print(f"{houses}")
             
+
+    def change_battery(self):
+        """
+        If the used capaciteit exceeds the max capaciteit, check if it is possible to move house to another battery
+        """
+        batteries = self.district.batteries
+        for battery in batteries:
+            if batteries.get(battery).used_cap > batteries.get(battery).max_cap:
+                for newbattery in batteries:
+                    if batteries.get(newbattery).used_cap < batteries.get(newbattery).max_cap:
+                        if newbattery != battery:
+                            while True:
+                                difference = 0
+                                bestchange = None
+                                for houses in batteries.get(battery).houses:
+                                    if batteries.get(newbattery).used_cap + houses.output < batteries.get(newbattery).max_cap:
+                                        if houses.output > difference:
+                                            difference = houses.output
+                                            bestchange = houses
+                                if difference == 0:
+                                    break
+                                else:
+                                    batteries.get(battery).houses.remove(bestchange)
+                                    bestchange.cables = []
+                                    batteries.get(battery).used_cap = batteries.get(battery).used_cap - bestchange.output
+                                    self.cable_to_battery(bestchange, batteries.get(newbattery))
+                                    batteries.get(newbattery).add_house(bestchange)
+            
+        for battery in batteries:
+            print(f"amount: {batteries.get(battery).used_cap}")
+
+
+    def swap_houses(self):
+        """
+        If the used capaciteit still exceeds the max capaciteit, check if it is possible to swap houses from batteries
+        """
+        batteries = self.district.batteries
+        for battery in batteries:
+            if batteries.get(battery).used_cap > batteries.get(battery).max_cap:
+                for newbattery in batteries:
+                    if batteries.get(newbattery).used_cap < batteries.get(newbattery).max_cap:
+                        if newbattery != battery:
+                            while True:
+                                difference = 0
+                                houseswap1 = None
+                                houseswap2 = None
+                                for houses in batteries.get(battery).houses:
+                                    for houses2 in batteries.get(newbattery).houses:
+                                        if (batteries.get(newbattery).used_cap - houses2.output + houses.output < batteries.get(newbattery).max_cap
+                                        and	houses.output - houses2.output > difference):
+                                            difference = houses.output - houses2.output
+                                            houseswap1 = houses
+                                            houseswap2 = houses2
+                                if difference == 0:
+                                    break
+                                else:
+                                    batteries.get(battery).houses.remove(houseswap1)
+                                    houseswap1.cables = []
+                                    batteries.get(battery).used_cap = batteries.get(battery).used_cap - houseswap1.output
+                                    self.cable_to_battery(houseswap1, batteries.get(newbattery))
+                                    batteries.get(newbattery).add_house(houseswap1)
+
+                                    batteries.get(newbattery).houses.remove(houseswap2)
+                                    houseswap2.cables = []
+                                    batteries.get(newbattery).used_cap = batteries.get(newbattery).used_cap - houseswap2.output
+                                    self.cable_to_battery(houseswap2, batteries.get(battery))
+                                    batteries.get(battery).add_house(houseswap2)
+        
+        for battery in batteries:
+            print(f"amount2: {batteries.get(battery).used_cap}")
+                                    
 
     def cable_to_battery(self, house, battery):
         """
@@ -53,6 +127,7 @@ class Random:
             y_cor += y_direction
 
         house.add_cable(x_cor, y_cor)
+    
     
     def total_cost(self):
         """
