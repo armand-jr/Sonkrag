@@ -21,5 +21,5 @@ def make_json(district, filename, current_district):
                 })
 
         with open(filename, "w") as fp:
-                json.dump(jsonfile, fp, indent=4, sort_keys=True)
+                json.dump(jsonfile, fp, indent=4)
 
