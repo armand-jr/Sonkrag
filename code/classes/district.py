@@ -3,7 +3,7 @@ import csv
 from .house import House
 from .battery import Battery
 
-class District ():
+class District():
 
     # TODO initialize
     def __init__(self, source_house, source_battery):

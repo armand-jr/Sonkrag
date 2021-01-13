@@ -143,6 +143,7 @@ class Random:
                 distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
                 total_cost += distance * self.cable_cost
 
+        total_cost += self.battery_cost * len(batteries)
         self.district.cost_shared = total_cost
 
     def __repr__(self):

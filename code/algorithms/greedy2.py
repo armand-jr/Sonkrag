@@ -1,7 +1,7 @@
 from code.classes import district, house, battery
 import random
 
-class improvedGreedy:
+class Greedy2:
     """
     The Greedy class that assigns the best possible value to each node one by one.
     """
@@ -217,7 +217,6 @@ class improvedGreedy:
                 total_cost += distance * self.cable_cost
 
         total_cost += self.battery_cost * len(batteries)
-
         self.district.cost_shared = total_cost
 
     def __repr__(self):
