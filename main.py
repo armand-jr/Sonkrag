@@ -10,7 +10,7 @@ BATTERYCOST = 5000
 
 if __name__ == "__main__":
 
-    current_district = str(1)
+    current_district = str(2)
 
     # Create a graph from our data
     data_houses = f"data/houses&batteries/district_{current_district}/district-{current_district}_houses.csv"
