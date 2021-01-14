@@ -3,7 +3,7 @@ import random
 
 class Greedy2:
     """
-    The Greedy class that assigns the best possible value to each node one by one.
+    The Greedy class that assigns the best possible value to each node one by one and takes the possibility of sharing the cables into account.
     """
     def __init__(self, district, cable_cost, battery_cost):
         self.district = district
@@ -28,7 +28,7 @@ class Greedy2:
 
     def change_battery(self):
         """
-        If the used capaciteit exceeds the max capaciteit, check if it is possible to move house to another battery
+        If the used capacity exceeds the max capacity, check if it is possible to move house to another battery
         """
         batteries = self.district.batteries
         for battery in batteries:
@@ -61,7 +61,7 @@ class Greedy2:
 
     def swap_houses(self):
         """
-        If the used capaciteit still exceeds the max capaciteit, check if it is possible to swap houses from batteries
+        If the used capacity still exceeds the max capacity, check if it is possible to swap houses from batteries
         """
         batteries = self.district.batteries
         for battery in batteries:

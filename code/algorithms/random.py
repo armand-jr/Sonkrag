@@ -3,7 +3,7 @@ import random, copy
 
 class Random:
     """
-    The Random class randomizes the optimal solution.
+    The Random class randomizes the optimal solution. Does NOT share cables.
     """
     def __init__(self, district, cable_cost, battery_cost):
         self.district = district
@@ -36,7 +36,7 @@ class Random:
 
     def change_battery(self):
         """
-        If the used capaciteit exceeds the max capaciteit, check if it is possible to move house to another battery
+        If the used capacity exceeds the max capacity, check if it is possible to move house to another battery
         """
         batteries = self.district.batteries
         for battery in batteries:

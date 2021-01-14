@@ -30,10 +30,6 @@ class District():
                 houses[int(house_id)] = House(house_id, row[0], row[1], row[2])
                 house_id += 1
 
-            #print("HOUSES \n")
-            #print(houses)
-            #print("\n\n\n")
-
         return houses
 
 
@@ -52,8 +48,6 @@ class District():
                 
                 batteries[battery_id] = Battery(battery_id, row[0], row[1], row[2])
                 battery_id +=1
-            #print("BATTERIES \n")
-            #print(batteries)    
         
         return batteries
 
