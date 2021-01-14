@@ -1,5 +1,5 @@
 from code.classes import district, house, battery
-from code.algorithms import greedy, greedy2, random
+from code.algorithms import greedy, greedy2, random, random2, hillclimber_random
 from code.visualisation import visualise as vis
 from code.visualisation import output
 from sys import argv
@@ -68,7 +68,20 @@ if __name__ == "__main__":
         answer.swap_houses()
         answer.improve_battery_distances()
         answer.total_cost()
-        
+
+
+    elif argv[1] == "hillclimber":
+        """
+        Hillclimber algorithm with random
+        """
+        print("hillclimber algorithm with random for start answer")
+        startanswer = random2.Random2(district, CABLECOST, BATTERYCOST)
+        startanswer.house_loop()
+        startanswer.change_battery()
+        startanswer.swap_houses()
+        finalanswer = hillclimber_random.HillClimber(district, CABLECOST, BATTERYCOST)
+        finalanswer.run(100000)
+
 
     else:
         print("this algorithm does not exist")

@@ -1,4 +1,4 @@
-import csv
+import csv, copy
 
 from .house import House
 from .battery import Battery
@@ -51,6 +51,27 @@ class District():
         
         return batteries
 
+    
+    def valid_solution(self):
+        houses = []
+        for house in self.houses.values():
+            houses.append(house)
+
+        for battery in self.batteries.values():
+            if battery.used_cap > battery.max_cap:
+                return False
+            
+            for house in battery.houses:
+                houses.remove(house)
+
+                if len(house.cables) == 0:
+                    return False
+        
+        if len(houses) > 0:
+            return False
+
+        return True
+
 
     def total_cost(self, battery_cost, cable_cost):
         batteries = self.batteries
@@ -59,11 +80,13 @@ class District():
         for battery in batteries:
             houses = batteries.get(battery).houses
             for house in houses:
-                distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
-                cableslength += distance
+                cableslength = cableslength + (len(house.cables) - 1)
 
+        print(f"Cables: {cableslength}")
         cableslength = cableslength - batteries.get(battery).double_cables_length
         total_cost += cableslength * cable_cost
         total_cost += battery_cost * len(batteries)
+        print(f"Total: {total_cost}")
         
         self.cost_shared = total_cost
+        return total_cost
