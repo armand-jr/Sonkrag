@@ -171,7 +171,7 @@ class Greedy:
                 total_cost += distance * self.cable_cost
 
         total_cost += self.battery_cost * len(batteries)
-        
+
         self.district.cost_shared = total_cost
 
     def __repr__(self):

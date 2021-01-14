@@ -11,15 +11,19 @@ def make_json(district, filename, current_district):
         for battery in batteries:
                 houses = []
                 for house in batteries.get(battery).houses:
-                        houses.append({"location": f"{house.x_cor},{house.y_cor}",
+                        houses.append({"id": house.id,
+                        "location": f"{house.x_cor},{house.y_cor}",
                         "output": house.output,
                         "cables": house.cables
                         })
-                jsonfile.append({"location": f"{batteries.get(battery).x_cor},{batteries.get(battery).x_cor}",
-                        "capacity": batteries.get(battery).max_cap,
-                        "houses": houses
+                jsonfile.append({"id": batteries.get(battery).id,
+                "location": f"{batteries.get(battery).x_cor},{batteries.get(battery).y_cor}",
+                "capacity": batteries.get(battery).max_cap,
+                "houses": houses
                 })
 
         with open(filename, "w") as fp:
                 json.dump(jsonfile, fp, indent=4)
 
+        with open("results/output.json", "w") as fp:
+                json.dump(jsonfile, fp, indent=4)

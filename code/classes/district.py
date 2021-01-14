@@ -56,3 +56,20 @@ class District():
             #print(batteries)    
         
         return batteries
+
+
+    def total_cost(self, battery_cost, cable_cost):
+        batteries = self.batteries
+        cableslength = 0
+        total_cost = 0
+        for battery in batteries:
+            houses = batteries.get(battery).houses
+            for house in houses:
+                distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
+                cableslength += distance
+
+        cableslength = cableslength - batteries.get(battery).double_cables_length
+        total_cost += cableslength * cable_cost
+        total_cost += battery_cost * len(batteries)
+        
+        self.cost_shared = total_cost

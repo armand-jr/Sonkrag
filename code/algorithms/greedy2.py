@@ -48,6 +48,8 @@ class Greedy2:
                                     break
                                 else:
                                     batteries.get(battery).houses.remove(bestchange)
+                                    for cable in bestchange.cables:
+                                        batteries.get(battery).remove_cable(cable)
                                     bestchange.cables = []
                                     batteries.get(battery).used_cap = batteries.get(battery).used_cap - bestchange.output
                                     self.cable_to_battery(bestchange, batteries.get(newbattery))
@@ -82,12 +84,16 @@ class Greedy2:
                                     break
                                 else:
                                     batteries.get(battery).houses.remove(houseswap1)
+                                    for cable in houseswap1.cables:
+                                        batteries.get(battery).remove_cable(cable)
                                     houseswap1.cables = []
                                     batteries.get(battery).used_cap = batteries.get(battery).used_cap - houseswap1.output
                                     self.cable_to_battery(houseswap1, batteries.get(newbattery))
                                     batteries.get(newbattery).add_house(houseswap1)
 
                                     batteries.get(newbattery).houses.remove(houseswap2)
+                                    for cable in houseswap2.cables:
+                                        batteries.get(battery).remove_cable(cable)
                                     houseswap2.cables = []
                                     batteries.get(newbattery).used_cap = batteries.get(newbattery).used_cap - houseswap2.output
                                     self.cable_to_battery(houseswap2, batteries.get(battery))
@@ -129,12 +135,16 @@ class Greedy2:
                                 break
                             else:
                                 batteries.get(battery).houses.remove(houseswap1)
+                                for cable in houseswap1.cables:
+                                    batteries.get(battery).remove_cable(cable)
                                 houseswap1.cables = []
                                 batteries.get(battery).used_cap = batteries.get(battery).used_cap - houseswap1.output
                                 self.cable_to_battery(houseswap1, batteries.get(newbattery))
                                 batteries.get(newbattery).add_house(houseswap1)
 
                                 batteries.get(newbattery).houses.remove(houseswap2)
+                                for cable in houseswap2.cables:
+                                    batteries.get(battery).remove_cable(cable)
                                 houseswap2.cables = []
                                 batteries.get(newbattery).used_cap = batteries.get(newbattery).used_cap - houseswap2.output
                                 self.cable_to_battery(houseswap2, batteries.get(battery))
@@ -192,6 +202,7 @@ class Greedy2:
         y_cor = house.y_cor
         while x_cor != battery.x_cor:
             house.add_cable(x_cor, y_cor)
+            battery.add_cable(f"{x_cor},{y_cor}")
             x_cor += x_direction
             
         if battery.y_cor < house.y_cor:
@@ -200,24 +211,28 @@ class Greedy2:
             y_direction = 1
         while y_cor != battery.y_cor:
             house.add_cable(x_cor, y_cor)
+            battery.add_cable(f"{x_cor},{y_cor}")
             y_cor += y_direction
 
         house.add_cable(x_cor, y_cor)
+        battery.add_cable(f"{x_cor},{y_cor}")
     
     def total_cost(self):
         """
         Calculates the total cost of the cables by calculating the shortest distance between the battery and the assigned houses
         """
-        batteries = self.district.batteries
-        total_cost = 0
-        for battery in batteries:
-            houses = batteries.get(battery).houses
-            for house in houses:
-                distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
-                total_cost += distance * self.cable_cost
+        self.district.total_cost(self.battery_cost, self.cable_cost)
 
-        total_cost += self.battery_cost * len(batteries)
-        self.district.cost_shared = total_cost
+        # batteries = self.district.batteries
+        # total_cost = 0
+        # for battery in batteries:
+        #     houses = batteries.get(battery).houses
+        #     for house in houses:
+        #         distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
+        #         total_cost += distance * self.cable_cost
+
+        # total_cost += self.battery_cost * len(batteries)
+        # self.district.cost_shared = total_cost
 
     def __repr__(self):
         return str(self.district.cost_shared)
