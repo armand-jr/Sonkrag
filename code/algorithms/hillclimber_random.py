@@ -62,10 +62,11 @@ class HillClimber(random2.Random2):
             self.no_improvement_tries = 0
             self.district = new_district
             self.total_cost = new_total_cost
-        elif new_total_cost == old_total_cost:
+        else:
             self.no_improvement_tries += 1
-            self.district = new_district
-            self.total_cost = new_total_cost
+            if new_total_cost == old_total_cost:
+                self.district = new_district
+                self.total_cost = new_total_cost
 
 
     def run(self, iterations):
@@ -78,7 +79,6 @@ class HillClimber(random2.Random2):
         for iteration in range(1, iterations + 1):
             if iteration % 100 == 0:
                 print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost}")
-                print(f"No improvement: {self.no_improvement_tries}")
 
             new_district = copy.deepcopy(self.district)
 

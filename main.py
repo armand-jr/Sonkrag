@@ -82,6 +82,7 @@ if __name__ == "__main__":
         startanswer.swap_houses()
         bestvalue = district.total_cost(BATTERYCOST, CABLECOST)
         bestdistrict = district
+        no_improvement = 0
 
         for hillclimberiteration in range(1, hillclimberiterations + 1):
             print(f"Hilclimber run: {hillclimberiteration}/{hillclimberiterations}, best value: {bestvalue}")
@@ -91,6 +92,11 @@ if __name__ == "__main__":
             if temporarydistrict.cost_shared < bestvalue:
                 bestdistrict = temporarydistrict
                 bestvalue = temporarydistrict.cost_shared
+                no_improvement = 0
+            else:
+                no_improvement += 1
+                if no_improvement >= 100:
+                    break
 
         district = bestdistrict
         print(f"bestvalue: {bestvalue}")
