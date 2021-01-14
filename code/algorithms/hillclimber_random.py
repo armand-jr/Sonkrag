@@ -13,8 +13,7 @@ class HillClimber(random2.Random2):
         self.district = copy.deepcopy(district)
         self.cable_cost = cable_cost
         self.battery_cost = battery_cost
-
-        # waar komt dit vandaan TODO
+        self.no_improvement_tries = 0
         self.total_cost = district.total_cost(battery_cost, cable_cost)
 
     def change(self, new_district):
@@ -33,6 +32,7 @@ class HillClimber(random2.Random2):
         random_house1 = random.choice(random_battery1.houses)
         random_house2 = random.choice(random_battery2.houses)
 
+        # removes house from old battery and adds it to the new battery, deleting old path and making a new one
         random_battery1.houses.remove(random_house1)
         for cable in random_house1.cables:
             random_battery1.remove_cable(cable)
@@ -51,26 +51,43 @@ class HillClimber(random2.Random2):
 
 
     def compare(self, new_district):
+        """
+        Compares the new district to the old district, if the total cost went down the new district is stored as current best district
+        """
+        
         old_total_cost = self.total_cost
         new_total_cost = new_district.total_cost(self.battery_cost, self.cable_cost)
 
-        if new_total_cost <= old_total_cost:
+        if new_total_cost < old_total_cost:
+            self.no_improvement_tries = 0
+            self.district = new_district
+            self.total_cost = new_total_cost
+        elif new_total_cost == old_total_cost:
+            self.no_improvement_tries += 1
             self.district = new_district
             self.total_cost = new_total_cost
 
 
     def run(self, iterations):
-        # self.iterations = iterations
+        """
+        Loop x amount of time through the district making small changes trying to improve the total cost
+        """
 
+        # self.iterations = iterations
+        self.no_improvement_tries = 0
         for iteration in range(1, iterations + 1):
             if iteration % 100 == 0:
                 print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost}")
+                print(f"No improvement: {self.no_improvement_tries}")
 
             new_district = copy.deepcopy(self.district)
 
             self.change(new_district)
 
             self.compare(new_district)
+
+            if self.no_improvement_tries >= 1000:
+                break
         
         return self.district
 
