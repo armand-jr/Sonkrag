@@ -1,4 +1,4 @@
-import copy 
+import copy, random
 
 
 class HillClimber:
@@ -17,7 +17,28 @@ class HillClimber:
     
 
     def change(self, new_district):
-        pass
+        """
+        Picks two random batteries, picks one house per battery and swaps them if possible
+        """
+        
+
+        random_battery1 = random.choice(list(new_districts.batteries.values()))
+
+        # if both random batteries are the same choose another one
+        while True:
+            random_battery2 = random.choice(list(new_districts.batteries.values()))
+            if random_battery1 != random_battery2:
+                break
+
+        random_house1 = random.choice(random_battery1.houses)
+        random_house2 = random.choice(random_battery2.houses)
+
+
+        houseswap1 = random
+        houseswap2 = None
+
+
+        
 
 
     def compare(self, new_district):
@@ -28,11 +49,14 @@ class HillClimber:
             self.district = new_district
             self.total_cost = new_total_cost
 
+
     def run(self, iterations=1000):
-        self.iterations = iterations
+        # self.iterations = iterations
+
         for iteration in range(iterations):
             new_district = copy.deepcopy(self.district)
 
             self.change(new_district)
 
             self.compare(new_district)
+
