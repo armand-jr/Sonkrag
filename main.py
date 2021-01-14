@@ -7,6 +7,7 @@ from sys import argv
 # Constants
 CABLECOST = 9
 BATTERYCOST = 5000
+hillclimberiterations = 10
 
 
 if __name__ == "__main__":
@@ -79,8 +80,19 @@ if __name__ == "__main__":
         startanswer.house_loop()
         startanswer.change_battery()
         startanswer.swap_houses()
-        finalanswer = hillclimber_random.HillClimber(district, CABLECOST, BATTERYCOST)
-        finalanswer.run(10000)
+        bestvalue = district.total_cost(CABLECOST, BATTERYCOST)
+        bestdistrict = district
+
+        for hillclimberiteration in range(1, hillclimberiterations + 1):
+            districthillclimber = hillclimber_random.HillClimber(district, CABLECOST, BATTERYCOST)
+            temporarydistrict = districthillclimber.run(1000)
+
+            print(f"Hilclimber run: {hillclimberiteration}/{hillclimberiterations}, best value: {bestvalue}")
+            if temporarydistrict.cost_shared < bestvalue:
+                bestdistrict = temporarydistrict
+                bestvalue = temporarydistrict.cost_shared
+
+        district = bestdistrict
 
 
     else:

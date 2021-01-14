@@ -82,11 +82,9 @@ class District():
             for house in houses:
                 cableslength = cableslength + (len(house.cables) - 1)
 
-        print(f"Cables: {cableslength}")
         cableslength = cableslength - batteries.get(battery).double_cables_length
         total_cost += cableslength * cable_cost
         total_cost += battery_cost * len(batteries)
-        print(f"Total: {total_cost}")
         
         self.cost_shared = total_cost
         return total_cost

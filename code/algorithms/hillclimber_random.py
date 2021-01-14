@@ -53,8 +53,6 @@ class HillClimber(random2.Random2):
     def compare(self, new_district):
         old_total_cost = self.total_cost
         new_total_cost = new_district.total_cost(self.battery_cost, self.cable_cost)
-        print(f"Old cost: {old_total_cost}")
-        print(f"New cost: {new_total_cost}")
 
         if new_total_cost <= old_total_cost:
             self.district = new_district
@@ -64,7 +62,7 @@ class HillClimber(random2.Random2):
     def run(self, iterations):
         # self.iterations = iterations
 
-        for iteration in range(iterations):
+        for iteration in range(1, iterations + 1):
             if iteration % 100 == 0:
                 print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost}")
 
@@ -73,4 +71,6 @@ class HillClimber(random2.Random2):
             self.change(new_district)
 
             self.compare(new_district)
+        
+        return self.district
 
