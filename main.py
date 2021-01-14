@@ -80,7 +80,7 @@ if __name__ == "__main__":
         startanswer.change_battery()
         startanswer.swap_houses()
         finalanswer = hillclimber_random.HillClimber(district, CABLECOST, BATTERYCOST)
-        finalanswer.run(100000)
+        finalanswer.run(10000)
 
 
     else:
