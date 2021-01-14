@@ -84,15 +84,16 @@ if __name__ == "__main__":
         bestdistrict = district
 
         for hillclimberiteration in range(1, hillclimberiterations + 1):
+            print(f"Hilclimber run: {hillclimberiteration}/{hillclimberiterations}, best value: {bestvalue}")
             districthillclimber = hillclimber_random.HillClimber(district, CABLECOST, BATTERYCOST)
             temporarydistrict = districthillclimber.run(1000)
 
-            print(f"Hilclimber run: {hillclimberiteration}/{hillclimberiterations}, best value: {bestvalue}")
             if temporarydistrict.cost_shared < bestvalue:
                 bestdistrict = temporarydistrict
                 bestvalue = temporarydistrict.cost_shared
 
         district = bestdistrict
+        print(f"bestvalue: {bestvalue}")
 
 
     else:
