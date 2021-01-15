@@ -73,6 +73,80 @@ class District():
         return True
 
 
+    # checks if there is some power left in other battery
+    def check_space_battery(self, old_battery, new_battery):
+        while True:
+            difference = 0
+            bestchange = None
+            for houses in old_battery.houses:
+                if new_battery.used_cap + houses.output < new_battery.max_cap and houses.output > difference:
+                    difference = houses.output
+                    bestchange = houses
+
+            if difference == 0:
+                break
+            else:
+                self.swap_battery(old_battery, new_battery, bestchange)
+
+
+    def swap_battery(self, old_battery, new_battery, house):
+        old_battery.houses.remove(house)
+        for cable in house.cables:
+            old_battery.remove_cable(cable)
+        house.cables = []
+        old_battery.used_cap = old_battery.used_cap - house.output
+        self.cable_to_battery(house, new_battery)
+        new_battery.add_house(house)
+
+
+
+    def swap_house(self, old_battery, new_battery):
+        while True:
+            difference = 0
+            houseswap1 = None
+            houseswap2 = None
+            for houses in old_battery.houses:
+                for houses2 in new_battery.houses:
+                    if (new_battery.used_cap - houses2.output + houses.output < new_battery.max_cap
+                    and	houses.output - houses2.output > difference):
+                        difference = houses.output - houses2.output
+                        houseswap1 = houses
+                        houseswap2 = houses2
+            if difference == 0:
+                break
+            else:
+                self.swap_battery(old_battery, new_battery, houseswap1)
+                self.swap_battery(new_battery, old_battery, houseswap2)
+
+
+    def cable_to_battery(self, house, battery):
+            """
+            From the house lays down a cable one step at the time until the cable reaches the battery
+            """
+            if battery.x_cor < house.x_cor:
+                x_direction = -1
+            else:
+                x_direction = 1
+            
+            x_cor = house.x_cor
+            y_cor = house.y_cor
+            while x_cor != battery.x_cor:
+                house.add_cable(x_cor, y_cor)
+                x_cor += x_direction
+                
+            if battery.y_cor < house.y_cor:
+                y_direction = -1
+            else:
+                y_direction = 1
+            while y_cor != battery.y_cor:
+                house.add_cable(x_cor, y_cor)
+                y_cor += y_direction
+
+            house.add_cable(x_cor, y_cor)
+            battery.add_cable(f"{x_cor},{y_cor}")
+
+
+
     def total_cost(self, battery_cost, cable_cost):
         batteries = self.batteries
         cableslength = 0

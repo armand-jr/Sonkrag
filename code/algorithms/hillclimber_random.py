@@ -33,21 +33,8 @@ class HillClimber(random2.Random2):
         random_house2 = random.choice(random_battery2.houses)
 
         # removes house from old battery and adds it to the new battery, deleting old path and making a new one
-        random_battery1.houses.remove(random_house1)
-        for cable in random_house1.cables:
-            random_battery1.remove_cable(cable)
-        random_house1.cables = []
-        random_battery1.used_cap = random_battery1.used_cap - random_house1.output
-        self.cable_to_battery(random_house1, random_battery2)
-        random_battery2.add_house(random_house1)
-
-        random_battery2.houses.remove(random_house2)
-        for cable in random_house2.cables:
-            random_battery2.remove_cable(cable)
-        random_house2.cables = []
-        random_battery2.used_cap = random_battery2.used_cap - random_house2.output
-        self.cable_to_battery(random_house2, random_battery1)
-        random_battery1.add_house(random_house2)
+        new_district.swap_battery(random_battery1, random_battery2, random_house1)
+        new_district.swap_house(random_battery2, random_battery1, random_house2)
 
 
     def compare(self, new_district):
@@ -86,7 +73,7 @@ class HillClimber(random2.Random2):
 
             self.compare(new_district)
 
-            if self.no_improvement_tries >= 1000:
+            if self.no_improvement_tries >= 10000:
                 break
         
         return self.district
