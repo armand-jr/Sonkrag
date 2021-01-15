@@ -34,7 +34,7 @@ class HillClimber(random2.Random2):
 
         # removes house from old battery and adds it to the new battery, deleting old path and making a new one
         new_district.swap_battery(random_battery1, random_battery2, random_house1)
-        new_district.swap_house(random_battery2, random_battery1, random_house2)
+        new_district.swap_battery(random_battery2, random_battery1, random_house2)
 
 
     def compare(self, new_district):
