@@ -28,8 +28,8 @@ class Random2:
         
         print(f"amount: {amount}")
 
-        for i in batteries:
-            print(batteries.get(i).used_cap)
+        # for i in batteries:
+        #     print(batteries.get(i).used_cap)
 
         # print(f"{houses}")
             
@@ -55,11 +55,11 @@ class Random2:
         # print(f"amount: {batteries.get(battery).used_cap}")
 
 
-    # def total_cost(self):
-    #     """
-    #     Calculates the total cost of the cables by calculating the shortest distance between the battery and the assigned houses
-    #     """
-    #     self.district.total_cost(self.battery_cost, self.cable_cost)
+    def total_cost(self):
+        """
+        Calculates the total cost of the cables by calculating the shortest distance between the battery and the assigned houses
+        """
+        return self.district.total_cost(self.battery_cost, self.cable_cost)
 
 
     def __repr__(self):

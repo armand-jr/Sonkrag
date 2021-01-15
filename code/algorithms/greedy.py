@@ -23,79 +23,28 @@ class Greedy:
             battery.add_house(houses.get(house))
             self.cable_to_battery(houses.get(house), battery)
         
-        for battery in batteries:
-            print(f"amount: {batteries.get(battery).used_cap}")
+        # for battery in batteries:
+        #     print(f"amount: {batteries.get(battery).used_cap}")
 
 
-    def change_battery(self):
+
+
+    def change_battery_or_house(self, bat_or_house):
         """
-        If the used capaciteit exceeds the max capaciteit, check if it is possible to move house to another battery
-        """
-        batteries = self.district.batteries
-        for battery in batteries:
-            if batteries.get(battery).used_cap > batteries.get(battery).max_cap:
-                for newbattery in batteries:
-                    if batteries.get(newbattery).used_cap < batteries.get(newbattery).max_cap:
-                        if newbattery != battery:
-                            while True:
-                                difference = 0
-                                bestchange = None
-                                for houses in batteries.get(battery).houses:
-                                    if batteries.get(newbattery).used_cap + houses.output < batteries.get(newbattery).max_cap:
-                                        if houses.output > difference:
-                                            difference = houses.output
-                                            bestchange = houses
-                                if difference == 0:
-                                    break
-                                else:
-                                    batteries.get(battery).houses.remove(bestchange)
-                                    bestchange.cables = []
-                                    batteries.get(battery).used_cap = batteries.get(battery).used_cap - bestchange.output
-                                    self.cable_to_battery(bestchange, batteries.get(newbattery))
-                                    batteries.get(newbattery).add_house(bestchange)
-            
-        for battery in batteries:
-            print(f"amount: {batteries.get(battery).used_cap}")
-
-
-    def swap_houses(self):
-        """
-        If the used capaciteit still exceeds the max capaciteit, check if it is possible to swap houses from batteries
+        If the used capacity exceeds the max capacity, check if it is possible to move house to another battery or to swap houses from batteries
         """
         batteries = self.district.batteries
         for battery in batteries:
             if batteries.get(battery).used_cap > batteries.get(battery).max_cap:
                 for newbattery in batteries:
-                    if batteries.get(newbattery).used_cap < batteries.get(newbattery).max_cap:
-                        if newbattery != battery:
-                            while True:
-                                difference = 0
-                                houseswap1 = None
-                                houseswap2 = None
-                                for houses in batteries.get(battery).houses:
-                                    for houses2 in batteries.get(newbattery).houses:
-                                        if (batteries.get(newbattery).used_cap - houses2.output + houses.output < batteries.get(newbattery).max_cap
-                                        and	houses.output - houses2.output > difference):
-                                            difference = houses.output - houses2.output
-                                            houseswap1 = houses
-                                            houseswap2 = houses2
-                                if difference == 0:
-                                    break
-                                else:
-                                    batteries.get(battery).houses.remove(houseswap1)
-                                    houseswap1.cables = []
-                                    batteries.get(battery).used_cap = batteries.get(battery).used_cap - houseswap1.output
-                                    self.cable_to_battery(houseswap1, batteries.get(newbattery))
-                                    batteries.get(newbattery).add_house(houseswap1)
+                    if batteries.get(newbattery).used_cap < batteries.get(newbattery).max_cap and newbattery != battery:
 
-                                    batteries.get(newbattery).houses.remove(houseswap2)
-                                    houseswap2.cables = []
-                                    batteries.get(newbattery).used_cap = batteries.get(newbattery).used_cap - houseswap2.output
-                                    self.cable_to_battery(houseswap2, batteries.get(battery))
-                                    batteries.get(battery).add_house(houseswap2)
-        
-        for battery in batteries:
-            print(f"amount2: {batteries.get(battery).used_cap}")
+                        if bat_or_house == 'change_battery':
+                            self.district.check_space_battery(batteries.get(battery), batteries.get(newbattery))
+
+                        else:
+                            self.district.swap_house(batteries.get(battery), batteries.get(newbattery))
+
 
 
     def least_used_cap(self, batteries):
@@ -162,17 +111,21 @@ class Greedy:
         """
         Calculates the total cost of the cables by calculating the shortest distance between the battery and the assigned houses
         """
-        batteries = self.district.batteries
-        total_cost = 0
-        for battery in batteries:
-            houses = batteries.get(battery).houses
-            for house in houses:
-                distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
-                total_cost += distance * self.cable_cost
 
-        total_cost += self.battery_cost * len(batteries)
+        return self.district.total_cost(self.battery_cost, self.cable_cost)
 
-        self.district.cost_shared = total_cost
+
+        # batteries = self.district.batteries
+        # total_cost = 0
+        # for battery in batteries:
+        #     houses = batteries.get(battery).houses
+        #     for house in houses:
+        #         distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
+        #         total_cost += distance * self.cable_cost
+
+        # total_cost += self.battery_cost * len(batteries)
+
+        # self.district.cost_shared = total_cost
 
     def __repr__(self):
         return str(self.district.cost_shared)

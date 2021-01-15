@@ -43,7 +43,21 @@ if __name__ == "__main__":
         answer.change_battery()
         answer.swap_houses()
         answer.total_cost()
-        # print(answer)
+        print(f"total cost: {answer}")
+
+
+
+    elif argv[1] == "random2":
+        """
+        Random algorithm 2
+        """
+        print("random algorithm chosen")
+        answer = random2.Random2(district, CABLECOST, BATTERYCOST)
+        answer.house_loop()
+        answer.change_battery_or_house('change_battery')
+        answer.change_battery_or_house('change_house')
+        answer.total_cost()
+        print(f"total cost: {answer}")
 
 
     elif argv[1] == "greedy":
@@ -53,10 +67,10 @@ if __name__ == "__main__":
         print("greedy algorithm chosen")
         answer = greedy.Greedy(district, CABLECOST, BATTERYCOST)
         answer.house_loop()
-        answer.change_battery()
-        answer.swap_houses()
+        answer.change_battery_or_house('change_battery')
+        answer.change_battery_or_house('change_house')
         answer.total_cost()
-        print(answer.total_cost())
+        print(f"total cost: {answer}")
         
     
     elif argv[1] == "greedy2":
@@ -66,11 +80,14 @@ if __name__ == "__main__":
         print("improved greedy algorithm chosen")
         answer = greedy2.Greedy2(district, CABLECOST, BATTERYCOST)
         answer.house_loop()
-        answer.change_battery()
-        answer.swap_houses()
-        answer.improve_battery_distances()
+        # answer.change_battery()
+        # answer.swap_houses()
+        answer.change_battery_or_house('change_battery')
+        answer.change_battery_or_house('change_house')
+        
+        # answer.improve_battery_distances()
         answer.total_cost()
-        print(answer.total_cost())
+        print(f"total cost: {answer}")
 
 
     elif argv[1] == "hillclimber":
@@ -87,7 +104,7 @@ if __name__ == "__main__":
         no_improvement = 0
 
         for hillclimberiteration in range(1, hillclimberiterations + 1):
-            print(f"Hilclimber run: {hillclimberiteration}/{hillclimberiterations}, best value: {bestvalue}")
+            print(f"Hillclimber run: {hillclimberiteration}/{hillclimberiterations}, best value: {bestvalue}")
             districthillclimber = hillclimber_random.HillClimber(district, CABLECOST, BATTERYCOST)
             temporarydistrict = districthillclimber.run(50000)
 

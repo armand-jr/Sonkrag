@@ -4,8 +4,6 @@ from .house import House
 from .battery import Battery
 
 class District():
-
-    # TODO initialize
     def __init__(self, source_house, source_battery):
         self.houses = self.load_houses(source_house)
         self.batteries = self.load_batteries(source_battery)
@@ -134,6 +132,7 @@ class District():
             y_cor = house.y_cor
             while x_cor != battery.x_cor:
                 house.add_cable(x_cor, y_cor)
+                battery.add_cable(f"{x_cor},{y_cor}")
                 x_cor += x_direction
                 
             if battery.y_cor < house.y_cor:
@@ -142,6 +141,7 @@ class District():
                 y_direction = 1
             while y_cor != battery.y_cor:
                 house.add_cable(x_cor, y_cor)
+                battery.add_cable(f"{x_cor},{y_cor}")
                 y_cor += y_direction
 
             house.add_cable(x_cor, y_cor)
@@ -240,7 +240,13 @@ class District():
 
             cableslength = cableslength - batteries.get(battery).double_cables_length
         total_cost += cableslength * cable_cost
+        print(f"before battery cost: {total_cost}")
         total_cost += battery_cost * len(batteries)
-        
+        print(f"after battery cost: {total_cost}")
+
+
+        print(f"cable : {cableslength} * {cable_cost}")
+        print(f"battery : {battery_cost} * {len(batteries)}")
+
         self.cost_shared = total_cost
         return total_cost

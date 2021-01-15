@@ -61,8 +61,8 @@ class Random:
                                     self.cable_to_battery(bestchange, batteries.get(newbattery))
                                     batteries.get(newbattery).add_house(bestchange)
             
-        for battery in batteries:
-            print(f"amount: {batteries.get(battery).used_cap}")
+        # for battery in batteries:
+        #     print(f"amount: {batteries.get(battery).used_cap}")
 
 
     def swap_houses(self):
@@ -101,8 +101,8 @@ class Random:
                                     self.cable_to_battery(houseswap2, batteries.get(battery))
                                     batteries.get(battery).add_house(houseswap2)
         
-        for battery in batteries:
-            print(f"amount2: {batteries.get(battery).used_cap}")
+        # for battery in batteries:
+        #     print(f"amount2: {batteries.get(battery).used_cap}")
                                     
 
     def cable_to_battery(self, house, battery):
@@ -135,16 +135,19 @@ class Random:
         """
         Calculates the total cost of the cables by calculating the shortest distance between the battery and the assigned houses
         """
-        batteries = self.district.batteries
-        total_cost = 0
-        for battery in batteries:
-            houses = batteries.get(battery).houses
-            for house in houses:
-                distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
-                total_cost += distance * self.cable_cost
 
-        total_cost += self.battery_cost * len(batteries)
-        self.district.cost_shared = total_cost
+        return self.district.total_cost(self.battery_cost, self.cable_cost)
+
+        # batteries = self.district.batteries
+        # total_cost = 0
+        # for battery in batteries:
+        #     houses = batteries.get(battery).houses
+        #     for house in houses:
+        #         distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
+        #         total_cost += distance * self.cable_cost
+
+        # total_cost += self.battery_cost * len(batteries)
+        # self.district.cost_shared = total_cost
 
     def __repr__(self):
         return str(self.district.cost_shared)
