@@ -196,6 +196,9 @@ class District():
 
 
     def closest_cable(self, battery, new_house):
+        """
+        Search for closest cable and attach house to that cable
+        """
         battery_distance = abs(battery.x_cor - new_house.x_cor) + abs(battery.y_cor - new_house.y_cor)
         best_distance= battery_distance 
         best_x_cor = 0
@@ -204,7 +207,7 @@ class District():
             temp_cable = cable.split(',')
             temp_cable = [int(temp_cable2) for temp_cable2 in temp_cable]
             
-            # temp_cable = int(temp_cable2)
+           
             distance = abs(temp_cable[0] - new_house.x_cor) + abs(temp_cable[1] - new_house.y_cor)
             if distance < best_distance:
                 best_distance = distance

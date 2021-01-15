@@ -221,7 +221,8 @@ class Greedy2:
         """
         Calculates the total cost of the cables by calculating the shortest distance between the battery and the assigned houses
         """
-        self.district.total_cost(self.battery_cost, self.cable_cost)
+        
+        return self.district.total_cost(self.battery_cost, self.cable_cost)
 
         # batteries = self.district.batteries
         # total_cost = 0

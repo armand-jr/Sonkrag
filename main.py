@@ -70,6 +70,7 @@ if __name__ == "__main__":
         answer.swap_houses()
         answer.improve_battery_distances()
         answer.total_cost()
+        print(answer.total_cost())
 
 
     elif argv[1] == "hillclimber":
@@ -88,7 +89,7 @@ if __name__ == "__main__":
         for hillclimberiteration in range(1, hillclimberiterations + 1):
             print(f"Hilclimber run: {hillclimberiteration}/{hillclimberiterations}, best value: {bestvalue}")
             districthillclimber = hillclimber_random.HillClimber(district, CABLECOST, BATTERYCOST)
-            temporarydistrict = districthillclimber.run(20000)
+            temporarydistrict = districthillclimber.run(50000)
 
             if temporarydistrict.cost_shared < bestvalue:
                 bestdistrict = temporarydistrict
@@ -96,7 +97,7 @@ if __name__ == "__main__":
                 no_improvement = 0
             else:
                 no_improvement += 1
-                if no_improvement >= 4000:
+                if no_improvement >= 30000:
                     break
 
         district = bestdistrict
