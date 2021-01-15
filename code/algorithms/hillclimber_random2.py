@@ -64,7 +64,7 @@ class HillClimber(random2.Random2):
         # self.iterations = iterations
         self.no_improvement_tries = 0
         for iteration in range(1, iterations + 1):
-            if iteration % 1000 == 0:
+            if iteration % 500 == 0:
                 print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost}")
 
             new_district = copy.deepcopy(self.district)

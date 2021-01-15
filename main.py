@@ -56,6 +56,7 @@ if __name__ == "__main__":
         answer.change_battery()
         answer.swap_houses()
         answer.total_cost()
+        print(answer.total_cost())
         
     
     elif argv[1] == "greedy2":
