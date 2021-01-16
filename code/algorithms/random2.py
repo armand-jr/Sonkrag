@@ -1,3 +1,14 @@
+########################################################################
+#
+# random2.py from SONKRAG
+# Armand Stiens, Willem Folkers, Dionne Ruigrok
+# 
+# Minor Programmeren UvA 2021
+# 
+# - ...
+# - ...
+########################################################################
+
 from code.classes import district, house, battery
 import random, copy
 
@@ -6,10 +17,12 @@ class Random2:
     The Random class randomizes the optimal solution and takes the possibility of sharing the cables into account.
     """
     def __init__(self, district, cable_cost, battery_cost):
+        """
+        Initializes the Random2 object
+        """
         self.district = district
         self.cable_cost = cable_cost
         self.battery_cost = battery_cost
-    
         
 
     def house_loop(self):
@@ -30,7 +43,6 @@ class Random2:
 
         # for i in batteries:
         #     print(batteries.get(i).used_cap)
-
         # print(f"{houses}")
             
 
@@ -48,9 +60,7 @@ class Random2:
                             self.district.check_space_battery(batteries.get(battery), batteries.get(newbattery))
 
                         else:
-                            self.district.swap_house(batteries.get(battery), batteries.get(newbattery))
-
-                        
+                            self.district.swap_house(batteries.get(battery), batteries.get(newbattery))            
        
         # print(f"amount: {batteries.get(battery).used_cap}")
 

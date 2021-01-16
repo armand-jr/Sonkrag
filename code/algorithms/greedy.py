@@ -1,3 +1,15 @@
+########################################################################
+#
+# greedy.py from SONKRAG
+# Armand Stiens, Willem Folkers, Dionne Ruigrok
+# 
+# Minor Programmeren UvA 2021
+# 
+# - ...
+# - ...
+########################################################################
+
+
 from code.classes import district, house, battery
 import random
 
@@ -6,10 +18,12 @@ class Greedy:
     The Greedy class that assigns the best possible value to each node one by one. Does NOT share cables.
     """
     def __init__(self, district, cable_cost, battery_cost):
+        """
+        Initializes the Greedy object
+        """
         self.district = district
         self.cable_cost = cable_cost
         self.battery_cost = battery_cost
-    
     
     
     def house_loop(self):
@@ -27,8 +41,6 @@ class Greedy:
         #     print(f"amount: {batteries.get(battery).used_cap}")
 
 
-
-
     def change_battery_or_house(self, bat_or_house):
         """
         If the used capacity exceeds the max capacity, check if it is possible to move house to another battery or to swap houses from batteries
@@ -44,7 +56,6 @@ class Greedy:
 
                         else:
                             self.district.swap_house(batteries.get(battery), batteries.get(newbattery))
-
 
 
     def least_used_cap(self, batteries):
@@ -77,10 +88,12 @@ class Greedy:
                     if distance < shortest_distance:
                         shortest_distance = distance
                         nearest_battery = batteries.get(battery)
+        
         if nearest_battery == None:
             nearest_battery = self.least_used_cap(batteries)
 
         return nearest_battery
+
 
     def cable_to_battery(self, house, battery):
         """
@@ -107,13 +120,12 @@ class Greedy:
 
         house.add_cable(x_cor, y_cor)
     
+
     def total_cost(self):
         """
         Calculates the total cost of the cables by calculating the shortest distance between the battery and the assigned houses
         """
-
         return self.district.total_cost(self.battery_cost, self.cable_cost)
-
 
         # batteries = self.district.batteries
         # total_cost = 0
@@ -126,6 +138,7 @@ class Greedy:
         # total_cost += self.battery_cost * len(batteries)
 
         # self.district.cost_shared = total_cost
+
 
     def __repr__(self):
         return str(self.district.cost_shared)

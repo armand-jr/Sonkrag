@@ -1,3 +1,5 @@
+# Armand Stiens, Willem Folkers, Dionne Ruigrok
+
 import csv, copy
 
 from .house import House
@@ -5,14 +7,17 @@ from .battery import Battery
 
 class District():
     def __init__(self, source_house, source_battery):
+        """
+        Initializes the district object
+        """
         self.houses = self.load_houses(source_house)
         self.batteries = self.load_batteries(source_battery)
         self.cost_shared = 0
 
-    # open csv file
+
     def load_houses (self, source_house):
         """
-        load all houses
+        load all houses by opening the right csv file
         """
         houses = {}
         house_id = 1
@@ -20,7 +25,6 @@ class District():
         #
         with open(source_house, 'r') as houses_file:
             csv_reader = csv.reader(houses_file)
-            
             next(csv_reader)
 
             #
@@ -51,6 +55,10 @@ class District():
 
     
     def valid_solution(self):
+        """
+        Checks if solution is valid by looking at max capacity of batteries and length of cables. 
+        Returns True if solution is valid, else False
+        """
         houses = []
         for house in self.houses.values():
             houses.append(house)
@@ -71,8 +79,10 @@ class District():
         return True
 
 
-    # checks if there is some power left in other battery
     def check_space_battery(self, old_battery, new_battery):
+        """
+        Checks if there is some power left in other battery. Takes old_battery and new_battery as object inputs
+        """
         while True:
             difference = 0
             bestchange = None
@@ -88,18 +98,26 @@ class District():
 
 
     def swap_battery(self, old_battery, new_battery, house):
+        """
+        Swaps the battery location of a house. Takes in the old and new battery and house as object inputs
+        """
+        # remove house from old battery and delete cables
         old_battery.houses.remove(house)
         for cable in house.cables:
             old_battery.remove_cable(cable)
         house.cables = []
         old_battery.used_cap = old_battery.used_cap - house.output
+
+        # add house to new battery
         if self.closest_cable(new_battery, house) != True:
             self.cable_to_battery(house, new_battery)
         new_battery.add_house(house)
 
 
-
     def swap_house(self, old_battery, new_battery):
+        """
+        Swaps house between two batteries. Takes in the old and new battery object inputs
+        """
         while True:
             difference = 0
             houseswap1 = None
@@ -111,6 +129,7 @@ class District():
                         difference = houses.output - houses2.output
                         houseswap1 = houses
                         houseswap2 = houses2
+                        
             if difference == 0:
                 break
             else:

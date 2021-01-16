@@ -1,3 +1,14 @@
+########################################################################
+#
+# random.py from SONKRAG
+# Armand Stiens, Willem Folkers, Dionne Ruigrok
+# 
+# Minor Programmeren UvA 2021
+# 
+# - ...
+# - ...
+########################################################################
+
 from code.classes import district, house, battery
 import random, copy
 
@@ -6,11 +17,13 @@ class Random:
     The Random class randomizes the optimal solution.
     """
     def __init__(self, district, cable_cost, battery_cost):
+        """
+        Initializes the Random object
+        """
         self.district = district
         self.cable_cost = cable_cost
         self.battery_cost = battery_cost
-    
-        
+           
 
     def house_loop(self):
         """
@@ -30,9 +43,7 @@ class Random:
 
         for i in batteries:
             print(batteries.get(i).used_cap)
-
-        # print(f"{houses}")
-            
+        
 
     def change_battery(self):
         """
@@ -135,7 +146,6 @@ class Random:
         """
         Calculates the total cost of the cables by calculating the shortest distance between the battery and the assigned houses
         """
-
         return self.district.total_cost(self.battery_cost, self.cable_cost)
 
         # batteries = self.district.batteries

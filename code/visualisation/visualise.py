@@ -1,8 +1,13 @@
+# Armand Stiens, Willem Folkers, Dionne Ruigrok
+
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
  
 def visualise(district):
+    """
+    TODO
+    """
     # fig = plt.figure()
     # ax = fig.add_subplot(1, 1, 1)
     # major_ticks = np.arange(0, 51, 10)
@@ -13,7 +18,6 @@ def visualise(district):
     # ax.set_yticks(major_ticks)
     # ax.set_yticks(minor_ticks, minor=True)
 
-
     house_x_cor = []
     house_y_cor = []
     battery_x_cor = []
@@ -23,13 +27,13 @@ def visualise(district):
     houses = district.houses
     batteries = district.batteries
 
+    # 
     for house in houses:
         cables.append(houses.get(house).cables)
         house_x_cor.append(houses.get(house).x_cor)
         house_y_cor.append(houses.get(house).y_cor)
 
-    
-
+    # 
     for cablelist in cables:
         for index in range(len(cablelist)-1):
 
@@ -46,7 +50,7 @@ def visualise(district):
         battery_x_cor.append(batteries.get(battery).x_cor)
         battery_y_cor.append(batteries.get(battery).y_cor)
 
-
+    # 
     x = list(range(0, 51))
     y = list(range(0, 51))
     plt.yticks(y, fontsize=6)
@@ -60,10 +64,6 @@ def visualise(district):
     plt.show()
 
 
-
-
-
-
 # data = [24, 24, 24, 16, 16, 2, 2, 2]
 # x = list(range(0, 50))
 # y = list(range(0, 50))
@@ -71,7 +71,3 @@ def visualise(district):
 
 # plt.yticks(y)
 # plt.xticks(x)
-
-
-
-    

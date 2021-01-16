@@ -1,12 +1,18 @@
+# Armand Stiens, Willem Folkers, Dionne Ruigrok
+
 import json 
 import main
 from code.classes import district, house, battery
 
 
 def make_json(district, filename, current_district):
+        """
+        TODO
+        """
         jsonfile = [{"district": int(current_district),
         "costs-shared": district.cost_shared}
         ]
+
         batteries = district.batteries
         for battery in batteries:
                 houses = []

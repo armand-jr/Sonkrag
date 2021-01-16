@@ -1,3 +1,14 @@
+########################################################################
+#
+# hillclimber_random2.py from SONKRAG
+# Armand Stiens, Willem Folkers, Dionne Ruigrok
+# 
+# Minor Programmeren UvA 2021
+# 
+# - ...
+# - ...
+########################################################################
+
 import copy, random
 from code.algorithms import random2
 
@@ -7,6 +18,9 @@ class HillClimber(random2.Random2):
     """
 
     def __init__(self, district, cable_cost, battery_cost):
+        """
+        Initializes the Hillclimber2 object
+        """
         if not district.valid_solution():
             raise Exception("HillClimber needs a complete solution. Please run the random algorithm first")
 
@@ -20,7 +34,6 @@ class HillClimber(random2.Random2):
         """
         Picks two random batteries, picks one house per battery and swaps them if possible
         """
-
         random_battery1 = random.choice(list(new_district.batteries.values()))
 
         # if both random batteries are the same choose another one
@@ -41,7 +54,6 @@ class HillClimber(random2.Random2):
         """
         Compares the new district to the old district, if the total cost went down the new district is stored as current best district
         """
-        
         old_total_cost = self.total_cost
         new_total_cost = new_district.total_cost(self.battery_cost, self.cable_cost)
 
@@ -60,7 +72,6 @@ class HillClimber(random2.Random2):
         """
         Loop x amount of time through the district making small changes trying to improve the total cost
         """
-
         # self.iterations = iterations
         self.no_improvement_tries = 0
         for iteration in range(1, iterations + 1):
@@ -68,13 +79,10 @@ class HillClimber(random2.Random2):
                 print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost}")
 
             new_district = copy.deepcopy(self.district)
-
             self.change(new_district)
-
             self.compare(new_district)
 
             if self.no_improvement_tries >= 10000:
                 break
         
         return self.district
-

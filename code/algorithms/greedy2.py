@@ -1,3 +1,14 @@
+########################################################################
+#
+# greedy2.py from SONKRAG
+# Armand Stiens, Willem Folkers, Dionne Ruigrok
+# 
+# Minor Programmeren UvA 2021
+# 
+# - ...
+# - ...
+########################################################################
+
 from code.classes import district, house, battery
 import random
 
@@ -6,6 +17,9 @@ class Greedy2:
     The Greedy class that assigns the best possible value to each node one by one and takes the possibility of sharing the cables into account.
     """
     def __init__(self, district, cable_cost, battery_cost):
+        """
+        Initializes the Greedy2 object
+        """
         self.district = district
         self.cable_cost = cable_cost
         self.battery_cost = battery_cost
@@ -24,7 +38,6 @@ class Greedy2:
         
         # for battery in batteries:
         #     print(f"amount: {batteries.get(battery).used_cap}")
-
 
 
     def change_battery_or_house(self, bat_or_house):
@@ -126,12 +139,12 @@ class Greedy2:
                     if distance < shortest_distance:
                         shortest_distance = distance
                         nearest_battery = batteries.get(battery)
+
         if nearest_battery == None:
             nearest_battery = self.least_used_cap(batteries)
 
         return nearest_battery
 
-    
 
     def total_cost(self):
         """
