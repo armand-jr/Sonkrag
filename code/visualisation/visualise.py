@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
  
-def visualise(district, filename):
+def visualise(district, algorithm, district_id, filename):
     """
     TODO
     """
@@ -20,54 +20,57 @@ def visualise(district, filename):
 
     house_x_cor = []
     house_y_cor = []
-    battery_x_cor = []
-    battery_y_cor = []
-    cables = []
+    battery_x_cor = 0
+    battery_y_cor = 0
 
-    houses = district.houses
     batteries = district.batteries
+    
+    # axes = plt.axis([[-3, 53, -3, 53]])
 
-    # 
-    for house in houses:
-        cables.append(houses.get(house).cables)
-        house_x_cor.append(houses.get(house).x_cor)
-        house_y_cor.append(houses.get(house).y_cor)
-
-    # 
-    for cablelist in cables:
-        for index in range(len(cablelist)-1):
-
-            point1 = cablelist[index]
-            point1  = point1.split(',')
-            point2 = cablelist[index + 1]
-            point2 = point2.split(',')
-            xvalues = [int(point1[0]), int(point2[0])]
-            yvalues = [int(point1[1]), int(point2[1])]
-            plt.plot(xvalues, yvalues, 'C1')
-
-
-    for battery in batteries:
-        battery_x_cor.append(batteries.get(battery).x_cor)
-        battery_y_cor.append(batteries.get(battery).y_cor)
-
-    # 
     x = list(range(0, 51))
     y = list(range(0, 51))
+    # plt.set_title('filename')
     plt.yticks(y, fontsize=6)
     plt.xticks(x, fontsize=6)
-
     plt.axis([-3, 53, -3, 53])
-    plt.scatter(battery_x_cor, battery_y_cor, marker='s', c='green', s=100, edgecolors='black')
-    plt.scatter(house_x_cor, house_y_cor, c='red')
+    # plt.set_axisbelow(True)
+    plt.suptitle(f"district {district_id} algorithm: {algorithm}")
     plt.grid(True)
     plt.tight_layout()
+
+
+    colors = ['blue', 'green', 'darkviolet', 'dodgerblue', 'orange']
+    index = 0
+
+    for battery in batteries:
+        battery_x_cor = batteries.get(battery).x_cor
+        battery_y_cor = batteries.get(battery).y_cor
+        cables = []
+
+        for house in batteries.get(battery).houses:
+            house_x_cor.append(house.x_cor)
+            house_y_cor.append(house.y_cor)
+            cables.append(house.cables)
+
+        plt.scatter(battery_x_cor, battery_y_cor, marker='s', c=colors[index], s=100, edgecolor='black')
+
+        for cablelist in cables:
+            for cable in range(len(cablelist)-1):
+                point1 = cablelist[cable]
+                point1  = point1.split(',')
+                point2 = cablelist[cable + 1]
+                point2 = point2.split(',')
+                xvalues = [int(point1[0]), int(point2[0])]
+                yvalues = [int(point1[1]), int(point2[1])]
+                plt.plot(xvalues, yvalues, colors[index])
+        index += 1
+
+    
+    plt.scatter(house_x_cor, house_y_cor, c='red')
     plt.savefig(filename)
     plt.show()
 
 
-# data = [24, 24, 24, 16, 16, 2, 2, 2]
-# x = list(range(0, 50))
-# y = list(range(0, 50))
 
 
 # plt.yticks(y)

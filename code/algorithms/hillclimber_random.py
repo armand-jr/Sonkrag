@@ -9,7 +9,7 @@
 # - ...
 ########################################################################
 
-import copy, random
+import copy, random, timeit
 from code.algorithms import random2
 
 class HillClimber(random2.Random2):
@@ -35,16 +35,15 @@ class HillClimber(random2.Random2):
         """
         Picks two random batteries, picks one house per battery and swaps them if possible
         """
-        random_battery1 = random.choice(list(new_district.batteries.values()))
+        while True:
+            random_battery1 = random.choice(list(new_district.batteries.values()))
 
-        # if both random batteries are the same choose another one
-        while True:
-            random_battery2 = random.choice(list(new_district.batteries.values()))
-            if random_battery1.id != random_battery2.id:
-                break
-        
-        # Check if the new used capacities after the houseswap will exceed the maximum capacities
-        while True:
+            # if both random batteries are the same choose another one
+            while True:
+                random_battery2 = random.choice(list(new_district.batteries.values()))
+                if random_battery1.id != random_battery2.id:
+                    break
+
             random_house1 = random.choice(random_battery1.houses)
             random_house2 = random.choice(random_battery2.houses)
 
@@ -81,15 +80,19 @@ class HillClimber(random2.Random2):
         """
         # self.iterations = iterations
         self.no_improvement_tries = 0
+        starttime = timeit.default_timer()
         for iteration in range(1, iterations + 1):
-            if iteration % 10 == 0:
-                print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost}")
+            
+
+            if iteration % 1000 == 0:
+                endtime = timeit.default_timer()
+                print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost},      time:{endtime - starttime}")
 
             new_district = copy.deepcopy(self.district)
             self.change(new_district)
             self.compare(new_district)
 
-            if self.no_improvement_tries >= 10000:
+            if self.no_improvement_tries >= 25000:
                 break
         
         return self.district

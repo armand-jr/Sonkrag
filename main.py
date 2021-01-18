@@ -7,7 +7,8 @@ from sys import argv
 # Constants
 CABLECOST = 9
 BATTERYCOST = 5000
-hillclimberiterations = 10
+ITERATIONS = 50000
+HILL_ITERATIONS = 200
 
 
 if __name__ == "__main__":
@@ -104,19 +105,19 @@ if __name__ == "__main__":
         bestdistrict = district
         no_improvement = 0
 
-        for hillclimberiteration in range(1, hillclimberiterations + 1):
-            print(f"Hillclimber run: {hillclimberiteration}/{hillclimberiterations}, best value: {bestvalue}")
+        for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
+            print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
             districthillclimber = hillclimber_random.HillClimber(district, CABLECOST, BATTERYCOST)
-            temporarydistrict = districthillclimber.run(50000)
+            temporarydistrict = districthillclimber.run(ITERATIONS)
 
             if temporarydistrict.cost_shared < bestvalue:
                 bestdistrict = temporarydistrict
                 bestvalue = temporarydistrict.cost_shared
-                no_improvement = 0
-            else:
-                no_improvement += 1
-                if no_improvement >= 30000:
-                    break
+                # no_improvement = 0
+            # else:
+            #     no_improvement += 1
+            #     if no_improvement >= 30000:
+            #         break
 
         district = bestdistrict
         print(f"bestvalue: {bestvalue}")
@@ -131,7 +132,7 @@ if __name__ == "__main__":
 
     # --------------------------- Visualisation --------------------------------
     filename = f"results/result_{argv[1]}_district{current_district}.png"
-    vis.visualise(district, filename)
+    vis.visualise(district, argv[1], argv[2], filename)
 
 
 
