@@ -100,10 +100,6 @@ if __name__ == "__main__":
         startanswer.change_battery_or_house('change_battery')
         startanswer.change_battery_or_house('change_house')
 
-        output.make_json(district, "results/tussenantwoord.json", current_district)
-        vis.visualise(district, "results/tussenantwoord.png")
-        print(f"Tussenkosten: {district.cost_shared}")
-
         bestvalue = district.total_cost(BATTERYCOST, CABLECOST)
         bestdistrict = district
         no_improvement = 0
