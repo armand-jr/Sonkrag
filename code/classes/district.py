@@ -137,6 +137,32 @@ class District():
                 self.swap_battery(new_battery, old_battery, houseswap2)
 
 
+    def house_swap_with_improvement(self, old_battery, new_battery):
+        while True:
+            improvement = 0
+            houseswap1 = None
+            houseswap2 = None
+
+            for houses in old_battery:
+                for houses2 in new_battery.houses:
+                    old_distance = abs(old_battery.x_cor - houses.x_cor) + abs(old_battery.y_cor - houses.y_cor)
+                    old_distance2 = abs(new_battery.x_cor - houses2.x_cor) + abs(new_battery.y_cor - houses2.y_cor)
+                    new_distance = abs(new_battery.x_cor - houses.x_cor) + abs(new_battery.y_cor - houses.y_cor)
+                    new_distance2 = abs(old_battery.x_cor - houses2.x_cor) + abs(old_battery.y_cor - houses2.y_cor)
+
+                    if (new_distance - old_distance + new_distance2 - old_distance2) < improvement:
+                        if (new_battery.used_cap - houses2.output + houses.output < new_battery.max_cap
+                        and old_battery.used_cap - houses.output + houses2.output < old_battery.max_cap):
+                            improvement = new_distance - old_distance + new_distance2 - old_distance2
+                            houseswap1 = houses
+                            houseswap2 = houses2
+
+            if improvement == 0:
+                break
+            else:
+                self.swap_battery(old_battery, new_battery, houseswap1)
+                self.swap_battery(new_battery, old_battery, houseswap2)
+
     
     def cable_to_battery(self, house, battery):
         """
@@ -264,13 +290,7 @@ class District():
         cables = list(set(cables))
         cableslength = len(cables)
         total_cost += cableslength * cable_cost
-        #print(f"before battery cost: {total_cost}")
         total_cost += battery_cost * len(batteries)
-        #print(f"after battery cost: {total_cost}")
-
-
-        #print(f"cable : {cableslength} * {cable_cost}")
-        #print(f"battery : {battery_cost} * {len(batteries)}")
 
         self.cost_shared = total_cost
         return total_cost

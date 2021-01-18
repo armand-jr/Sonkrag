@@ -7,7 +7,7 @@ from sys import argv
 # Constants
 CABLECOST = 9
 BATTERYCOST = 5000
-hillclimberiterations = 2
+hillclimberiterations = 10
 
 
 if __name__ == "__main__":
