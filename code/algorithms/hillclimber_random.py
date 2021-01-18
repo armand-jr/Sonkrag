@@ -42,9 +42,15 @@ class HillClimber(random2.Random2):
             random_battery2 = random.choice(list(new_district.batteries.values()))
             if random_battery1.id != random_battery2.id:
                 break
+        
+        # Check if the new used capacities after the houseswap will exceed the maximum capacities
+        while True:
+            random_house1 = random.choice(random_battery1.houses)
+            random_house2 = random.choice(random_battery2.houses)
 
-        random_house1 = random.choice(random_battery1.houses)
-        random_house2 = random.choice(random_battery2.houses)
+            if (random_battery1.used_cap - random_house1.output + random_house2.output < random_battery1.max_cap
+            and random_battery2.used_cap - random_house2.output + random_house1.output < random_battery2.max_cap):
+                break
 
         # removes house from old battery and adds it to the new battery, deleting old path and making a new one
         new_district.swap_battery(random_battery1, random_battery2, random_house1)

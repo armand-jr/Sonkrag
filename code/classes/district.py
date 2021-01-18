@@ -173,7 +173,7 @@ class District():
         From the house lays down a cable one step at the time until the cable reaches the cable 
         """
         if cable_x_cor < house.x_cor:
-                x_direction = -1
+            x_direction = -1
         else:
             x_direction = 1
             
@@ -253,11 +253,13 @@ class District():
         cableslength = 0
         total_cost = 0
         for battery in batteries:
-            houses = batteries.get(battery).houses
-            for house in houses:
-                cableslength = cableslength + len(house.cables)
+            # houses = batteries.get(battery).houses
+            # for house in houses:
+            #     cableslength = cableslength + len(house.cables)
+            
+            #cableslength = cableslength - batteries.get(battery).double_cables_length
+            cableslength += len(batteries.get(battery).cables)
 
-            cableslength = cableslength - batteries.get(battery).double_cables_length
         total_cost += cableslength * cable_cost
         #print(f"before battery cost: {total_cost}")
         total_cost += battery_cost * len(batteries)
