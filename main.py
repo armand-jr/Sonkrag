@@ -7,7 +7,7 @@ from sys import argv
 # Constants
 CABLECOST = 9
 BATTERYCOST = 5000
-hillclimberiterations = 120
+hillclimberiterations = 2
 
 
 if __name__ == "__main__":
@@ -99,6 +99,11 @@ if __name__ == "__main__":
         startanswer.house_loop()
         startanswer.change_battery_or_house('change_battery')
         startanswer.change_battery_or_house('change_house')
+
+        output.make_json(district, "results/tussenantwoord.json", current_district)
+        vis.visualise(district, "results/tussenantwoord.png")
+        print(f"Tussenkosten: {district.cost_shared}")
+
         bestvalue = district.total_cost(BATTERYCOST, CABLECOST)
         bestdistrict = district
         no_improvement = 0
@@ -129,7 +134,8 @@ if __name__ == "__main__":
 
 
     # --------------------------- Visualisation --------------------------------
-    #vis.visualise(district)
+    filename = f"results/result_{argv[1]}_district{current_district}.png"
+    vis.visualise(district, filename)
 
 
 

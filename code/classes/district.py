@@ -139,32 +139,32 @@ class District():
 
     
     def cable_to_battery(self, house, battery):
-            """
-            From the house lays down a cable one step at the time until the cable reaches the battery. Makes the route from house to battery
-            """
-            if battery.x_cor < house.x_cor:
-                x_direction = -1
-            else:
-                x_direction = 1
-            
-            x_cor = house.x_cor
-            y_cor = house.y_cor
-            while x_cor != battery.x_cor:
-                house.add_cable(x_cor, y_cor)
-                battery.add_cable(f"{x_cor},{y_cor}")
-                x_cor += x_direction
-                
-            if battery.y_cor < house.y_cor:
-                y_direction = -1
-            else:
-                y_direction = 1
-            while y_cor != battery.y_cor:
-                house.add_cable(x_cor, y_cor)
-                battery.add_cable(f"{x_cor},{y_cor}")
-                y_cor += y_direction
-
+        """
+        From the house lays down a cable one step at the time until the cable reaches the battery. Makes the route from house to battery
+        """
+        if battery.x_cor < house.x_cor:
+            x_direction = -1
+        else:
+            x_direction = 1
+        
+        x_cor = house.x_cor
+        y_cor = house.y_cor
+        while x_cor != battery.x_cor:
             house.add_cable(x_cor, y_cor)
             battery.add_cable(f"{x_cor},{y_cor}")
+            x_cor += x_direction
+            
+        if battery.y_cor < house.y_cor:
+            y_direction = -1
+        else:
+            y_direction = 1
+        while y_cor != battery.y_cor:
+            house.add_cable(x_cor, y_cor)
+            battery.add_cable(f"{x_cor},{y_cor}")
+            y_cor += y_direction
+
+        house.add_cable(x_cor, y_cor)
+        battery.add_cable(f"{x_cor},{y_cor}")
             
 
 
@@ -177,24 +177,24 @@ class District():
         else:
             x_direction = 1
             
-            x_cor = house.x_cor
-            y_cor = house.y_cor
-            while x_cor != cable_x_cor:
-                house.add_cable(x_cor, y_cor)
-                battery.add_cable(f"{x_cor},{y_cor}")
-                x_cor += x_direction
-                
-            if cable_y_cor < house.y_cor:
-                y_direction = -1
-            else:
-                y_direction = 1
-            while y_cor != cable_y_cor:
-                house.add_cable(x_cor, y_cor)
-                battery.add_cable(f"{x_cor},{y_cor}")
-                y_cor += y_direction
-
+        x_cor = house.x_cor
+        y_cor = house.y_cor
+        while x_cor != cable_x_cor:
             house.add_cable(x_cor, y_cor)
             battery.add_cable(f"{x_cor},{y_cor}")
+            x_cor += x_direction
+            
+        if cable_y_cor < house.y_cor:
+            y_direction = -1
+        else:
+            y_direction = 1
+        while y_cor != cable_y_cor:
+            house.add_cable(x_cor, y_cor)
+            battery.add_cable(f"{x_cor},{y_cor}")
+            y_cor += y_direction
+
+        house.add_cable(x_cor, y_cor)
+        battery.add_cable(f"{x_cor},{y_cor}")
             
     
 
@@ -209,8 +209,8 @@ class District():
         while f"{cable_x},{cable_y}" != cable_list[index]:
             index +=1
 
-        for index2 in range(index,len(cable_list)):
-            new_house.cable.append(cable_list[index2])
+        for index2 in range(index + 1,len(cable_list)): #Plus 1 om er voor te zorgen dat het eerste punt niet dubbel in de kabellijst staat
+            new_house.cables.append(cable_list[index2])
             battery.add_cable(cable_list[index2])
 
 
@@ -255,17 +255,17 @@ class District():
         for battery in batteries:
             houses = batteries.get(battery).houses
             for house in houses:
-                cableslength = cableslength + (len(house.cables) - 1)
+                cableslength = cableslength + len(house.cables)
 
             cableslength = cableslength - batteries.get(battery).double_cables_length
         total_cost += cableslength * cable_cost
-        print(f"before battery cost: {total_cost}")
+        #print(f"before battery cost: {total_cost}")
         total_cost += battery_cost * len(batteries)
-        print(f"after battery cost: {total_cost}")
+        #print(f"after battery cost: {total_cost}")
 
 
-        print(f"cable : {cableslength} * {cable_cost}")
-        print(f"battery : {battery_cost} * {len(batteries)}")
+        #print(f"cable : {cableslength} * {cable_cost}")
+        #print(f"battery : {battery_cost} * {len(batteries)}")
 
         self.cost_shared = total_cost
         return total_cost

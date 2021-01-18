@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
  
-def visualise(district):
+def visualise(district, filename):
     """
     TODO
     """
@@ -61,6 +61,7 @@ def visualise(district):
     plt.scatter(house_x_cor, house_y_cor, c='red')
     plt.grid(True)
     plt.tight_layout()
+    plt.savefig(filename)
     plt.show()
 
 
