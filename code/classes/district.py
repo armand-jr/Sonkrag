@@ -193,7 +193,6 @@ class District():
         battery.add_cable(f"{x_cor},{y_cor}")
             
 
-
     def cable_to_cable(self, house, cable_x_cor, cable_y_cor, battery):
         """ 
         From the house lays down a cable one step at the time until the cable reaches the cable 
@@ -221,7 +220,6 @@ class District():
 
         house.add_cable(x_cor, y_cor)
         battery.add_cable(f"{x_cor},{y_cor}")
-            
     
 
     def double_cable_route(self, battery, cable_x, cable_y, new_house):
@@ -272,8 +270,6 @@ class District():
             return False
 
 
-
-
     def total_cost(self, battery_cost, cable_cost):
         batteries = self.batteries
         cableslength = 0
@@ -294,3 +290,36 @@ class District():
 
         self.cost_shared = total_cost
         return total_cost
+    
+
+    def __eq__(self, other):
+        if not isinstance(other, District):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+        
+        for battery in self.batteries:
+            for house in self.batteries.get(battery).houses:
+                if not self.house_check(house, other.batteries.get(battery).houses):
+                    return False
+
+        return True
+
+
+    def house_check(self, house, houses):
+        for index in range(len(houses)):
+            if house.id == houses[index]:
+                return self.cable_check(house, houses[index])
+        
+        return False
+
+
+    def cable_check(self, house1, house2):
+        if len(house1.cables) != len(house2.cables):
+            return False
+        
+        cableindex = 0
+        for cableindex in range(len(house1)):
+            if house1.cables[cableindex] != house2.cables[cableindex]:
+                return False
+        
+        return True

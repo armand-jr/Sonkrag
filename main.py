@@ -1,5 +1,5 @@
 from code.classes import district, house, battery
-from code.algorithms import greedy, greedy2, random, random2, hillclimber_random
+from code.algorithms import greedy, greedy2, random, random2, hillclimber_random, genetic
 from code.visualisation import visualise as vis
 from code.visualisation import output
 from sys import argv
@@ -7,9 +7,9 @@ from sys import argv
 # Constants
 CABLECOST = 9
 BATTERYCOST = 5000
-ITERATIONS = 50000
-HILL_ITERATIONS = 200
-
+ITERATIONS = 100000
+HILL_ITERATIONS = 5
+genetic_populations_size = 50 #size * 6 % 15 == 0 and size * 3 % 5 == 0 and size % 2 == 0
 
 if __name__ == "__main__":
 
@@ -121,6 +121,14 @@ if __name__ == "__main__":
 
         district = bestdistrict
         print(f"bestvalue: {bestvalue}")
+
+
+    elif argv[1] == "genetic":
+        """
+        Genetic algorithm with random
+        """
+        answer = genetic.Genetic(district, CABLECOST, BATTERYCOST, genetic_populations_size)
+        district = answer.run()
 
 
     else:
