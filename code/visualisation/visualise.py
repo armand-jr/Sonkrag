@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
  
-def visualise(district, algorithm, district_id, filename):
+def visualise(district, algorithm, district_id, totalcost, filename):
     """
     TODO
     """
@@ -34,7 +34,7 @@ def visualise(district, algorithm, district_id, filename):
     plt.xticks(x, fontsize=6)
     plt.axis([-3, 53, -3, 53])
     # plt.set_axisbelow(True)
-    plt.suptitle(f"district {district_id} algorithm: {algorithm}")
+    plt.suptitle(f"algorithm: {algorithm}, district {district_id}, total cost: {totalcost}")
     plt.grid(True)
     plt.tight_layout()
 

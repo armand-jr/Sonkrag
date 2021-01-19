@@ -43,7 +43,7 @@ if __name__ == "__main__":
         answer.house_loop()
         answer.change_battery()
         answer.swap_houses()
-        answer.total_cost()
+        answer.district.total_cost(BATTERYCOST, CABLECOST)
         print(f"total cost: {answer}")
 
 
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         answer.house_loop()
         answer.change_battery_or_house('change_battery')
         answer.change_battery_or_house('change_house')
-        answer.total_cost()
+        answer.district.total_cost(BATTERYCOST, CABLECOST)
         print(f"total cost: {answer}")
 
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
         answer.house_loop()
         answer.change_battery_or_house('change_battery')
         answer.change_battery_or_house('change_house')
-        answer.total_cost()
+        answer.district.total_cost(BATTERYCOST, CABLECOST)
         print(f"total cost: {answer}")
         
     
@@ -87,7 +87,7 @@ if __name__ == "__main__":
         answer.change_battery_or_house('change_house')
         
         # answer.improve_battery_distances()
-        answer.total_cost()
+        answer.district.total_cost(BATTERYCOST, CABLECOST)
         print(f"total cost: {answer}")
 
 
@@ -140,7 +140,8 @@ if __name__ == "__main__":
 
     # --------------------------- Visualisation --------------------------------
     filename = f"results/result_{argv[1]}_district{current_district}.png"
-    vis.visualise(district, argv[1], argv[2], filename)
+    total_cost = district.total_cost(BATTERYCOST, CABLECOST)
+    vis.visualise(district, argv[1], argv[2], total_cost, filename)
 
 
 
