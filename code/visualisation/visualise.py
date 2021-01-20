@@ -17,7 +17,7 @@ def visualise(district, algorithm, district_id, filename):
     # ax.set_xticks(minor_ticks, minor=True)
     # ax.set_yticks(major_ticks)
     # ax.set_yticks(minor_ticks, minor=True)
-
+    plt.clf()
     house_x_cor = []
     house_y_cor = []
     battery_x_cor = 0
@@ -70,10 +70,9 @@ def visualise(district, algorithm, district_id, filename):
                 plt.plot(xvalues, yvalues, colors[index])
 
         index += 1
-
-    
     
     plt.savefig(filename)
+    
     plt.show()
 
 
