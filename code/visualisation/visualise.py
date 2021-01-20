@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
  
-def visualise(district, algorithm, district_id, filename):
+def visualise(district, algorithm, district_id, total_cost, filename):
     """
     Creates an images of the result
     """
