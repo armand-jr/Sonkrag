@@ -36,7 +36,7 @@ def visualise(district, algorithm, district_id, total_cost, filename):
     # plt.set_axisbelow(True)
 
     # , total cost: {totalcost}
-    plt.suptitle(f"algorithm: {algorithm}, district {district_id}")
+    plt.suptitle(f"algorithm: {algorithm}, district {district_id}, total costs: {total_cost}")
     plt.grid(True)
     plt.tight_layout()
 
