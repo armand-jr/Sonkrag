@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
  
-def visualise(district, algorithm, district_id, totalcost, filename):
+def visualise(district, algorithm, district_id, filename):
     """
-    TODO
+    Creates an images of the result
     """
     # fig = plt.figure()
     # ax = fig.add_subplot(1, 1, 1)
@@ -34,25 +34,30 @@ def visualise(district, algorithm, district_id, totalcost, filename):
     plt.xticks(x, fontsize=6)
     plt.axis([-3, 53, -3, 53])
     # plt.set_axisbelow(True)
-    plt.suptitle(f"algorithm: {algorithm}, district {district_id}, total cost: {totalcost}")
+
+    # , total cost: {totalcost}
+    plt.suptitle(f"algorithm: {algorithm}, district {district_id}")
     plt.grid(True)
     plt.tight_layout()
 
 
-    colors = ['blue', 'green', 'darkviolet', 'dodgerblue', 'orange']
+    colors = ['orange', 'forestgreen', 'm', 'dodgerblue', 'red']
     index = 0
 
     for battery in batteries:
         battery_x_cor = batteries.get(battery).x_cor
         battery_y_cor = batteries.get(battery).y_cor
         cables = []
+        house_x_cor = []
+        house_y_cor = []
 
         for house in batteries.get(battery).houses:
             house_x_cor.append(house.x_cor)
             house_y_cor.append(house.y_cor)
             cables.append(house.cables)
-
-        plt.scatter(battery_x_cor, battery_y_cor, marker='s', c=colors[index], s=100, edgecolor='black')
+            
+        plt.scatter(battery_x_cor, battery_y_cor, marker='s', c=colors[index], s=100, edgecolor='black', zorder=3)
+        plt.scatter(house_x_cor, house_y_cor, c=colors[index], zorder=3)
 
         for cablelist in cables:
             for cable in range(len(cablelist)-1):
@@ -63,10 +68,11 @@ def visualise(district, algorithm, district_id, totalcost, filename):
                 xvalues = [int(point1[0]), int(point2[0])]
                 yvalues = [int(point1[1]), int(point2[1])]
                 plt.plot(xvalues, yvalues, colors[index])
+
         index += 1
 
     
-    plt.scatter(house_x_cor, house_y_cor, c='red')
+    
     plt.savefig(filename)
     plt.show()
 
