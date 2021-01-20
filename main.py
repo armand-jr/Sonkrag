@@ -9,7 +9,7 @@ CABLECOST = 9
 BATTERYCOST = 5000
 ITERATIONS = 100000
 HILL_ITERATIONS = 5
-genetic_populations_size = 50 #size * 6 % 15 == 0 and size * 3 % 5 == 0 and size % 2 == 0
+genetic_populations_size = 10 #size * 6 % 15 == 0 and size * 3 % 5 == 0 and size % 2 == 0
 
 if __name__ == "__main__":
 
@@ -130,6 +130,26 @@ if __name__ == "__main__":
         answer = genetic.Genetic(district, CABLECOST, BATTERYCOST, genetic_populations_size)
         district = answer.run()
 
+
+    elif argv[1] == "genetichillclimber":
+        answer = genetic.Genetic(district, CABLECOST, BATTERYCOST, genetic_populations_size)
+        district = answer.run()
+
+        bestvalue = district.total_cost(BATTERYCOST, CABLECOST)
+        bestdistrict = district
+        no_improvement = 0
+
+        for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
+            print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
+            districthillclimber = hillclimber_random.HillClimber(district, CABLECOST, BATTERYCOST)
+            temporarydistrict = districthillclimber.run(ITERATIONS)
+
+            if temporarydistrict.cost_shared < bestvalue:
+                bestdistrict = temporarydistrict
+                bestvalue = temporarydistrict.cost_shared
+
+        district = bestdistrict
+        
 
     else:
         print("this algorithm does not exist")
