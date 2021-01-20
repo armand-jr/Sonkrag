@@ -19,11 +19,8 @@ class Genetic(random2.Random2):
         self.cost_populations = []
         self.population_size = population_size
 
-        self.best_districts = []
-        self.best_costs = []
-        self.worst_districts = []
-
         self.parents = []
+        self.parents_score = []
         self.parent1 = None
         self.parent2 = None
         self.child = None
@@ -45,36 +42,17 @@ class Genetic(random2.Random2):
             self.district.total_cost(self.battery_cost, self.cable_cost)
             self.district_population.append(self.district)
             self.cost_populations.append(self.district.cost_shared)
-
-
-    def sort_values(self):
-        for loopindex in range(0, self.population_size):
-            index = self.cost_populations.index(min(self.cost_populations))
-            
-            if loopindex < int(self.population_size / 2):
-                self.best_districts.append(self.district_population[index])
-                self.best_costs.append(self.cost_populations[index])
-            else:
-                self.worst_districts.append(self.district_population[index])
-            
-            del self.cost_populations[index]
-            del self.district_population[index]
     
 
     def make_parents(self):
-        self.parents = []
-        
-        for loopindex in range(0, int(self.population_size * 0.6)):
-            while True:
-                if loopindex < int(self.population_size * 6 / 15):
-                    parent = random.choice(self.best_districts)
-                else:
-                    parent = random.choice(self.worst_districts)
-                    
-                if parent not in self.parents:
-                    self.parents.append(parent)
-                    break
-    
+        self.parents = copy.deepcopy(self.district_population)
+        self.parents_score = copy.deepcopy(self.cost_populations)
+
+        while len(self.parents) > int(self.population_size * 0.6):
+            index = self.parents_score.index(max(self.parents_score))
+            del self.parents[index]
+            del self.parents_score[index]
+
 
     def parents_loop(self):
         while len(self.parents) > 0:
@@ -95,8 +73,7 @@ class Genetic(random2.Random2):
                 childsolution.change_battery_or_house('change_battery')
                 childsolution.change_battery_or_house('change_house')
 
-                if (self.child.valid_solution() and self.child not in self.district_population
-                and self.child not in self.best_districts and self.child not in self.worst_districts):
+                if (self.child.valid_solution() and self.child not in self.district_population):
                     self.district_population.append(self.child)
                     self.cost_populations.append(self.child.total_cost(self.battery_cost, self.cable_cost))
                     children += 1
@@ -134,30 +111,23 @@ class Genetic(random2.Random2):
         no_improvement_tries = 0
         starttime = timeit.default_timer()
 
-        while no_improvement_tries < 100000:
+        while no_improvement_tries < 10000:
             endtime = timeit.default_timer()
             print(f"Best value: {bestvalue}, no improvement tries: {no_improvement_tries}, time:{endtime - starttime}")
 
-            self.sort_values()
             self.make_parents()
             self.parents_loop()
             
-            while len(self.district_population) < self.population_size:
-                index = self.best_costs.index(min(self.best_costs))
-                self.cost_populations.append(self.best_costs[index])
-                self.district_population.append(self.best_districts[index])
-                del self.best_costs[index]
-                del self.best_districts[index]
+            while len(self.district_population) > self.population_size:
+                index = self.cost_populations.index(max(self.cost_populations))
+                del self.district_population[index]
+                del self.cost_populations[index]
 
             if min(self.cost_populations) < bestvalue:
                 bestvalue = min(self.cost_populations)
                 no_improvement_tries = 0
             else:
                 no_improvement_tries += 1
-            
-            self.best_districts = []
-            self.best_costs = []
-            self.worst_districts = []
         
         bestdistrict = self.cost_populations.index(bestvalue)
         return self.district_population[bestdistrict]
