@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
  
-def visualise(district, algorithm, district_id, total_cost, filename):
+def visualise(district, algorithm, district_id, total_cost, filename, advanced5):
     """
     Creates an images of the result
     """
@@ -36,7 +36,7 @@ def visualise(district, algorithm, district_id, total_cost, filename):
     # plt.set_axisbelow(True)
 
     # , total cost: {totalcost}
-    plt.suptitle(f"algorithm: {algorithm}, district {district_id}, total costs: {total_cost}")
+    plt.suptitle(f"algorithm: {algorithm}, district {district_id}, total costs: {total_cost}, {advanced5}")
     plt.grid(True)
     plt.tight_layout()
 

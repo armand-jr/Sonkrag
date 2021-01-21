@@ -210,7 +210,7 @@ if __name__ == "__main__":
     else:
         filename = f"results/result_{argv[1]}_district{current_district}.png"
     total_cost = district.total_cost(BATTERYCOST, CABLECOST)
-    vis.visualise(district, argv[1], argv[2], total_cost, filename)
+    vis.visualise(district, argv[1], argv[2], total_cost, filename, argv[3])
 
 
 

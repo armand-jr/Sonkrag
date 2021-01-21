@@ -270,6 +270,7 @@ class District():
             return False
 
 
+    # own costs
     def total_cost(self, battery_cost, cable_cost):
         batteries = self.batteries
         cableslength = 0
