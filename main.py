@@ -1,4 +1,4 @@
-from code.classes import district, house, battery
+from code.classes import district, house, battery, batteryplacement
 from code.algorithms import greedy, greedy2, random, random2, hillclimber_random, genetic
 from code.visualisation import visualise as vis
 from code.visualisation import output
@@ -30,6 +30,7 @@ if __name__ == "__main__":
     
     district = district.District(data_houses, data_batteries)
 
+    batteryplacement.batteryplacement(district, CABLECOST, BATTERYCOST)
     #print(district)
 
 
