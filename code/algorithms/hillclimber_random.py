@@ -92,7 +92,7 @@ class HillClimber(random2.Random2):
             self.change(new_district)
             self.compare(new_district)
 
-            if self.no_improvement_tries >= 25000:
+            if self.no_improvement_tries >= 100000:
                 break
         
         return self.district

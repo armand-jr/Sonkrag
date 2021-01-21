@@ -7,8 +7,8 @@ from sys import argv
 # Constants
 CABLECOST = 9
 BATTERYCOST = 5000
-ITERATIONS = 100000
-HILL_ITERATIONS = 5
+ITERATIONS = 250000
+HILL_ITERATIONS = 20
 genetic_populations_size = 50 #size * 6 % 15 == 0 and size * 3 % 5 == 0 and size % 2 == 0
 
 if __name__ == "__main__":
@@ -97,6 +97,38 @@ if __name__ == "__main__":
         """
         print("hillclimber algorithm with random for start answer")
         startanswer = random2.Random2(district, CABLECOST, BATTERYCOST)
+        startanswer.house_loop()
+        startanswer.change_battery_or_house('change_battery')
+        startanswer.change_battery_or_house('change_house')
+
+        bestvalue = district.total_cost(BATTERYCOST, CABLECOST)
+        bestdistrict = district
+        no_improvement = 0
+
+        for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
+            print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
+            districthillclimber = hillclimber_random.HillClimber(district, CABLECOST, BATTERYCOST)
+            temporarydistrict = districthillclimber.run(ITERATIONS)
+
+            if temporarydistrict.cost_shared < bestvalue:
+                bestdistrict = temporarydistrict
+                bestvalue = temporarydistrict.cost_shared
+                # no_improvement = 0
+            # else:
+            #     no_improvement += 1
+            #     if no_improvement >= 30000:
+            #         break
+
+        district = bestdistrict
+        print(f"bestvalue: {bestvalue}")
+
+
+    elif argv[1] == "hillclimbergreedy":
+        """
+        Hillclimber algorithm with greedy
+        """
+        print("hillclimber algorithm with random for start answer")
+        startanswer = greedy2.Greedy2(district, CABLECOST, BATTERYCOST)
         startanswer.house_loop()
         startanswer.change_battery_or_house('change_battery')
         startanswer.change_battery_or_house('change_house')
