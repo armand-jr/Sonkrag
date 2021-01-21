@@ -20,25 +20,29 @@ class batteryplacement:
         answer.change_battery_or_house('change_battery')
         answer.change_battery_or_house('change_house')
 
-        self.best_score = self.bestdistrict.total_score(self.battery_cost, self.cable_cost)
+        self.best_score = self.bestdistrict.total_cost(self.battery_cost, self.cable_cost)
 
     def run(self):
-        for index in range(500):
+        for index in range(1000):
+            if index % 100 == 0:
+                print(f"Battery coordinate change {index}/1000")
+            
             new_district = copy.deepcopy(self.district)
             batteries = list(new_district.batteries.values())
             coordinates = self.battery_locations()
 
             for batteryindex in range(len(batteries)):
-                coordinate = coordinates[batteryindex].split(',')
-                batteries[batteryindex].x_cor = coordinate[0]
-                batteries[batteryindex].y_cor = coordinate[1]
+                coordinate = coordinates[batteryindex]
+                coordinate = coordinate.split(',')
+                batteries[batteryindex].x_cor = int(coordinate[0])
+                batteries[batteryindex].y_cor = int(coordinate[1])
             
             answer = greedy2.Greedy2(new_district, self.cable_cost, self.battery_cost)
             answer.house_loop()
             answer.change_battery_or_house('change_battery')
             answer.change_battery_or_house('change_house')
 
-            new_score = new_district.total_score(self.battery_cost, self.cable_cost)
+            new_score = new_district.total_cost(self.battery_cost, self.cable_cost)
 
             if new_score < self.best_score:
                 self.best_score = new_score
@@ -48,9 +52,10 @@ class batteryplacement:
             batteries = list(self.district.batteries.values())
 
             for batteryindex in range(len(batteries)):
-                bestcoordinate = bestcoordinates[batteryindex].split(',')
-                batteries[batteryindex].x_cor = bestcoordinate[0]
-                batteries[batteryindex].y_cor = bestcoordinate[1]
+                bestcoordinate = bestcoordinates[batteryindex]
+                bestcoordinate = bestcoordinate.split(',')
+                batteries[batteryindex].x_cor = int(bestcoordinate[0])
+                batteries[batteryindex].y_cor = int(bestcoordinate[1])
 
 
     def battery_locations(self):
@@ -58,13 +63,15 @@ class batteryplacement:
         
         while len(coordinates_list) < 5:
             randomx = random.randint(0,4)
-            x_cor = 5 + 10 * randomx
+            x_cor = int(5 + 10 * randomx)
 
             randomy = random.randint(0,4)
-            y_cor = 5 + 10 * randomy
+            y_cor = int(5 + 10 * randomy)
 
-            if f"{x_cor,y_cor}" not in coordinates_list and f"{x_cor,y_cor}" not in self.house_coordinates:
-                coordinates_list.append(f"{x_cor,y_cor}")
+            coordinate = f"{x_cor},{y_cor}"
+
+            if coordinate not in coordinates_list and coordinate not in self.house_coordinates:
+                coordinates_list.append(coordinate)
         
         return coordinates_list
 

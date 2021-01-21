@@ -274,17 +274,17 @@ class District():
         batteries = self.batteries
         cableslength = 0
         total_cost = 0
-        cables = []
+        #cables = []
         for battery in batteries:
             houses = batteries.get(battery).houses
             for house in houses:
-                cables.extend(house.cables)
-                #cableslength = cableslength + len(house.cables)
+                #cables.extend(house.cables)
+                cableslength = cableslength + len(house.cables)
             
-            #cableslength = cableslength - batteries.get(battery).double_cables_length)
+            cableslength = cableslength - batteries.get(battery).double_cables_length
 
-        cables = list(set(cables))
-        cableslength = len(cables)
+        #cables = list(set(cables))
+        #cableslength = len(cables)
         total_cost += cableslength * cable_cost
         total_cost += battery_cost * len(batteries)
 

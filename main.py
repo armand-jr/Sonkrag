@@ -7,19 +7,23 @@ from sys import argv
 # Constants
 CABLECOST = 9
 BATTERYCOST = 5000
-ITERATIONS = 250000
-HILL_ITERATIONS = 20
+ITERATIONS = 10000
+HILL_ITERATIONS = 1
 genetic_populations_size = 50 #size * 6 % 15 == 0 and size * 3 % 5 == 0 and size % 2 == 0
 
 if __name__ == "__main__":
 
     # check command line arguments
-    if len(argv) != 3:
-        print("Usage: python main.py [algorithm] [district number]")
+    if len(argv) != 4:
+        print("Usage: python main.py [algorithm] [district number] [basis/advanced5]")
         exit(1)
 
     if argv[2] not in str([1, 2, 3]):
         print("please choose between district 1, 2 or 3")
+        exit(1)
+
+    if argv[3] not in ["basis", "advanced5"]:
+        print("please choose between basis or advanced5")
         exit(1)
 
     current_district = str(argv[2])
@@ -30,7 +34,9 @@ if __name__ == "__main__":
     
     district = district.District(data_houses, data_batteries)
 
-    batteryplacement.batteryplacement(district, CABLECOST, BATTERYCOST)
+    if argv[3] == "advanced5":
+        batterychange = batteryplacement.batteryplacement(district, CABLECOST, BATTERYCOST)
+        batterychange.run()
     #print(district)
 
 
@@ -46,7 +52,6 @@ if __name__ == "__main__":
         answer.swap_houses()
         answer.district.total_cost(BATTERYCOST, CABLECOST)
         print(f"total cost: {answer}")
-
 
 
     elif argv[1] == "random2":
@@ -163,6 +168,7 @@ if __name__ == "__main__":
         answer = genetic.Genetic(district, CABLECOST, BATTERYCOST, genetic_populations_size)
         district = answer.run()
 
+
     elif argv[1] == "genetic2":
         """
         Genetic algorithm with random
@@ -199,12 +205,18 @@ if __name__ == "__main__":
 
 
     # --------------------------- Visualisation --------------------------------
-    filename = f"results/result_{argv[1]}_district{current_district}.png"
+    if argv[3] == "advanced5":
+        filename = f"results/result_{argv[1]}_district{current_district}_{argv[3]}.png"
+    else:
+        filename = f"results/result_{argv[1]}_district{current_district}.png"
     total_cost = district.total_cost(BATTERYCOST, CABLECOST)
     vis.visualise(district, argv[1], argv[2], total_cost, filename)
 
 
 
     # --------------------------- Output JSON ----------------------------------
-    filename = f"results/result_{argv[1]}_district{current_district}.json"
+    if argv[3] == "advanced5":
+        filename = f"results/result_{argv[1]}_district{current_district}_{argv[3]}.json"
+    else:
+        filename = f"results/result_{argv[1]}_district{current_district}.json"
     output.make_json(district, filename, current_district)
