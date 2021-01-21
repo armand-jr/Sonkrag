@@ -10,9 +10,9 @@
 ########################################################################
 
 import copy, random
-from code.algorithms import random2
+from code.algorithms import greedy2
 
-class HillClimber(random2.Random2):
+class HillClimber(greedy2.Greedy2):
     """
     Implements a Hill Climber algorithm which makes a random change to the solution. If there is a improvement, the new solution is kept.
     """
