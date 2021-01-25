@@ -10,7 +10,7 @@ def make_json(district, filename, current_district):
         TODO
         """
         jsonfile = [{"district": int(current_district),
-        "costs-own": district.cost_shared}
+        "costs-shared": district.cost_shared}
         ]
 
         batteries = district.batteries

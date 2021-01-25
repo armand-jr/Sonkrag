@@ -82,7 +82,7 @@ class HillClimber(greedy2.Greedy2):
             self.change(new_district)
             self.compare(new_district)
 
-            if self.no_improvement_tries >= 10000:
+            if self.no_improvement_tries >= 50000:
                 break
         
         return self.district

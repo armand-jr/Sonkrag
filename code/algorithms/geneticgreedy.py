@@ -167,7 +167,7 @@ class GeneticGreedy(random2.Random2):
         no_improvement_tries = 0
         starttime = timeit.default_timer()
 
-        while no_improvement_tries < 50:
+        while no_improvement_tries < 100:
             endtime = timeit.default_timer()
             print(f"Best value: {bestvalue}, no improvement tries: {no_improvement_tries}, time:{endtime - starttime}")
 

@@ -125,16 +125,43 @@ class Genetic(random2.Random2):
 
     def assign_battery(self, old_battery, not_assigned):
         for house in not_assigned:
-            random_battery = random.choice(list(self.child.batteries.values()))
-            self.child.swap_battery(old_battery, random_battery, house)
+            differentchance = random.randint(1,10)
+            if differentchance <= 2:
+                random_or_clocest = random.choice(["random", "closest"])
+                if random_or_clocest == "closest":
+                    new_battery = self.clocest_battery(old_battery, house)
+                else:
+                    new_battery = random.choice(list(self.child.batteries.values()))
+
+                self.child.swap_battery(old_battery, new_battery, house)
 
 
+    def clocest_battery(self, old_battery, house):
+        batteries = self.child.batteries
+        nearest_battery = None
+        shortest_distance = 0
+
+        for battery in batteries:
+            distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
+
+            if shortest_distance == 0:
+                shortest_distance = distance
+                nearest_battery = batteries.get(battery)
+            else:
+                if distance < shortest_distance:
+                    shortest_distance = distance
+                    nearest_battery = batteries.get(battery)
+        return nearest_battery
+
+        
+
+ 
     def run(self):
         bestvalue = min(self.cost_populations)
         no_improvement_tries = 0
         starttime = timeit.default_timer()
 
-        while no_improvement_tries < 100000:
+        while no_improvement_tries < 250:
             endtime = timeit.default_timer()
             print(f"Best value: {bestvalue}, no improvement tries: {no_improvement_tries}, time:{endtime - starttime}")
 
