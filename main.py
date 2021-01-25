@@ -89,9 +89,9 @@ if __name__ == "__main__":
         answer.house_loop()
         # answer.change_battery()
         # answer.swap_houses()
-        answer.improve_battery_distances()
         answer.change_battery_or_house('change_battery')
         answer.change_battery_or_house('change_house')
+        answer.improve_battery_distances()
         
         # answer.improve_battery_distances()
         answer.district.total_cost(BATTERYCOST, CABLECOST)
@@ -137,9 +137,9 @@ if __name__ == "__main__":
         print("hillclimber algorithm with random for start answer")
         startanswer = greedy2.Greedy2(district, CABLECOST, BATTERYCOST)
         startanswer.house_loop()
-        startanswer.improve_battery_distances()
         startanswer.change_battery_or_house('change_battery')
         startanswer.change_battery_or_house('change_house')
+        startanswer.improve_battery_distances()
 
         bestvalue = district.total_cost(BATTERYCOST, CABLECOST)
         bestdistrict = district
