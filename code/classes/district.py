@@ -143,7 +143,7 @@ class District():
             houseswap1 = None
             houseswap2 = None
 
-            for houses in old_battery:
+            for houses in old_battery.houses:
                 for houses2 in new_battery.houses:
                     old_distance = abs(old_battery.x_cor - houses.x_cor) + abs(old_battery.y_cor - houses.y_cor)
                     old_distance2 = abs(new_battery.x_cor - houses2.x_cor) + abs(new_battery.y_cor - houses2.y_cor)
@@ -275,17 +275,18 @@ class District():
         batteries = self.batteries
         cableslength = 0
         total_cost = 0
-        #cables = []
+        cables = []
         for battery in batteries:
             houses = batteries.get(battery).houses
             for house in houses:
-                #cables.extend(house.cables)
-                cableslength = cableslength + len(house.cables)
+                cable_battery_combos = [(cable, battery) for cable in house.cables]
+                cables.extend(cable_battery_combos)
+                #cableslength = cableslength + len(house.cables)
             
-            cableslength = cableslength - batteries.get(battery).double_cables_length
+            #cableslength = cableslength - batteries.get(battery).double_cables_length
 
-        #cables = list(set(cables))
-        #cableslength = len(cables)
+        cables = list(set(cables))
+        cableslength = len(cables)
         total_cost += cableslength * cable_cost
         total_cost += battery_cost * len(batteries)
 
