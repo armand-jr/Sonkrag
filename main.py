@@ -7,7 +7,7 @@ from sys import argv
 # Constants
 CABLECOST = 9
 BATTERYCOST = 5000
-ITERATIONS = 10000
+ITERATIONS = 100000
 HILL_ITERATIONS = 1
 genetic_populations_size = 50 #size * 6 % 15 == 0 and size * 3 % 5 == 0 and size % 2 == 0
 
@@ -89,6 +89,7 @@ if __name__ == "__main__":
         answer.house_loop()
         # answer.change_battery()
         # answer.swap_houses()
+        answer.improve_battery_distances()
         answer.change_battery_or_house('change_battery')
         answer.change_battery_or_house('change_house')
         
@@ -136,6 +137,7 @@ if __name__ == "__main__":
         print("hillclimber algorithm with random for start answer")
         startanswer = greedy2.Greedy2(district, CABLECOST, BATTERYCOST)
         startanswer.house_loop()
+        startanswer.improve_battery_distances()
         startanswer.change_battery_or_house('change_battery')
         startanswer.change_battery_or_house('change_house')
 
