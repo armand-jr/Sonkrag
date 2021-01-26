@@ -1,19 +1,24 @@
-########################################################################
+##########################################################################################################
 #
 # genetic.py from SONKRAG
 # Armand Stiens, Willem Folkers, Dionne Ruigrok
 # 
 # Minor Programmeren UvA 2021
 # 
-# - Makes n random solution and tries to improve and get the solution
-########################################################################
+# - Makes n random solution and tries to improve with the genetic algorithm and returns the best solution
+##########################################################################################################
 
 import copy, random, timeit
 from code.algorithms import random as random_algo
 
 class Genetic():
-
+    """
+    Implements a genetic algorithm 
+    """
     def __init__(self, district, cable_cost, battery_cost, population_size):
+        """
+        Initializes genetic object
+        """
         self.district_population = []
         self.cost_populations = []
         self.population_size = population_size
@@ -30,6 +35,7 @@ class Genetic():
         self.cable_cost = cable_cost
         self.battery_cost = battery_cost
 
+        # generate n random different solutions 
         while len(self.district_population) < self.population_size:
             while True:
                 self.district = copy.deepcopy(district)
@@ -41,6 +47,7 @@ class Genetic():
                 if self.district not in self.district_population:
                     break
 
+            # generate total cost and append to list
             self.district.total_cost(self.battery_cost, self.cable_cost)
             self.district_population.append(self.district)
             self.cost_populations.append(self.district.cost_shared)
@@ -48,12 +55,12 @@ class Genetic():
 
     def sort_values(self):
         """
-
+        Split districts into best and worst district based on total cost
         """
-        for loopindex in range(0, self.population_size):
+        for parent_index in range(0, self.population_size):
             index = self.cost_populations.index(min(self.cost_populations))
             
-            if loopindex < int(self.population_size / 2):
+            if parent_index < int(self.population_size / 2):
                 self.best_districts.append(self.district_population[index])
                 self.best_costs.append(self.cost_populations[index])
             else:
@@ -65,13 +72,13 @@ class Genetic():
 
     def make_parents(self):
         """
-        
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         """
         self.parents = []
         
-        for loopindex in range(0, int(self.population_size * 0.6)):
+        for parent_index in range(0, int(self.population_size * 0.6)):
             while True:
-                if loopindex < int(self.population_size * 6 / 15):
+                if parent_index < int(self.population_size * 6 / 15):
                     parent = random.choice(self.best_districts)
                 else:
                     parent = random.choice(self.worst_districts)

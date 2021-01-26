@@ -17,6 +17,7 @@ from code.algorithms import greedy, random, hillclimber, genetic, geneticgreedy
 from code.visualisation import visualise as vis
 from code.visualisation import output
 from sys import argv
+import timeit, copy
 
 
 # Constants
@@ -24,7 +25,7 @@ CABLECOST = 9
 BATTERYCOST = 5000
 ITERATIONS = 250000
 HILL_ITERATIONS = 2
-genetic_populations_size = 100 #size * 6 % 15 == 0 and size * 3 % 5 == 0 and size % 2 == 0
+GENETIC_POPULATION_SIZE = 100
 
 
 if __name__ == "__main__":
@@ -44,12 +45,14 @@ if __name__ == "__main__":
 
     current_district = str(argv[2])
 
-    # Create a graph from our data
+    # make variable of the data
     data_houses = f"data/houses&batteries/district_{current_district}/district-{current_district}_houses.csv"
     data_batteries = f"data/houses&batteries/district_{current_district}/district-{current_district}_batteries.csv"
     
     district = district.District(data_houses, data_batteries)
 
+
+    # check if user wants different battery placement or not
     if argv[3] == "advanced5":
         batterychange = batteryplacement.batteryplacement(district, CABLECOST, BATTERYCOST)
         batterychange.run()
@@ -61,12 +64,26 @@ if __name__ == "__main__":
         Random algorithm
         """
         print("random algorithm chosen")
-        answer = random.Random(district, CABLECOST, BATTERYCOST)
-        answer.house_loop()
-        answer.change_battery_or_house('change_battery')
-        answer.change_battery_or_house('change_house')
-        answer.district.total_cost(BATTERYCOST, CABLECOST)
-        print(f"total cost: {answer}")
+
+        starttime = timeit.default_timer()
+        bestdistrict = district
+        best_value = 0
+        for index in range(790000):
+            temporarydistrict = copy.deepcopy(district)
+
+            answer = random.Random(temporarydistrict, CABLECOST, BATTERYCOST)
+            answer.house_loop()
+            answer.change_battery_or_house('change_battery')
+            answer.change_battery_or_house('change_house')
+            answer.district.total_cost(BATTERYCOST, CABLECOST)
+            endtime = timeit.default_timer()
+            uid += 1
+            
+            if best_value == 0 or temporarydistrict.cost_shared < best_value:
+                best_value = temporarydistrict.cost_shared
+                bestdistrict = temporarydistrict
+            print(f"id: {index}, total cost: {answer}, best value: {best_value}, time:{endtime - starttime}")
+        district = bestdistrict
 
 
     elif argv[1] == "greedy":
@@ -124,11 +141,13 @@ if __name__ == "__main__":
         bestdistrict = district
         no_improvement = 0
 
+        # run hill climber with n iterations
         for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
             print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
             districthillclimber = hillclimber.HillClimber(district, CABLECOST, BATTERYCOST)
             temporarydistrict = districthillclimber.run(ITERATIONS)
 
+            # save best answer
             if temporarydistrict.cost_shared < bestvalue:
                 bestdistrict = temporarydistrict
                 bestvalue = temporarydistrict.cost_shared
@@ -141,7 +160,7 @@ if __name__ == "__main__":
         """
         Genetic algorithm with random and greedy
         """
-        answer = genetic.Genetic(district, CABLECOST, BATTERYCOST, genetic_populations_size)
+        answer = genetic.Genetic(district, CABLECOST, BATTERYCOST, GENETIC_POPULATION_SIZE)
         district = answer.run()
 
 
@@ -149,7 +168,7 @@ if __name__ == "__main__":
         """
         Genetic algorithm with greedy
         """
-        answer = geneticgreedy.GeneticGreedy(district, CABLECOST, BATTERYCOST, genetic_populations_size)
+        answer = geneticgreedy.GeneticGreedy(district, CABLECOST, BATTERYCOST, GENETIC_POPULATION_SIZE)
         district = answer.run()
 
 
@@ -157,18 +176,20 @@ if __name__ == "__main__":
         """
         Genetic hillclimber
         """
-        answer = genetic.Genetic(district, CABLECOST, BATTERYCOST, genetic_populations_size)
+        answer = genetic.Genetic(district, CABLECOST, BATTERYCOST, GENETIC_POPULATION_SIZE)
         district = answer.run()
 
         bestvalue = district.total_cost(BATTERYCOST, CABLECOST)
         bestdistrict = district
         no_improvement = 0
 
+        # run hill climber with n iterations
         for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
             print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
             districthillclimber = hillclimber.HillClimber(district, CABLECOST, BATTERYCOST)
             temporarydistrict = districthillclimber.run(ITERATIONS)
-
+            
+            # save best answer
             if temporarydistrict.cost_shared < bestvalue:
                 bestdistrict = temporarydistrict
                 bestvalue = temporarydistrict.cost_shared

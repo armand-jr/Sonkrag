@@ -1,6 +1,6 @@
 ########################################################################
 #
-# hillclimber_random.py from SONKRAG
+# hillclimber.py from SONKRAG
 # Armand Stiens, Willem Folkers, Dionne Ruigrok
 # 
 # Minor Programmeren UvA 2021
@@ -12,10 +12,12 @@ import copy, random, timeit
 
 class HillClimber():
     """
-    Implements a Hill Climber algorithm which makes a random change to the solution. If there is a improvement, the new solution is kept.
+    Implements a hill climber algorithm which makes a random change to the solution. If there is a improvement, the new solution is kept.
     """
-
     def __init__(self, district, cable_cost, battery_cost):
+        """
+        Initializes hill climber object
+        """
         self.district = copy.deepcopy(district)
         self.cable_cost = cable_cost
         self.battery_cost = battery_cost
@@ -70,13 +72,13 @@ class HillClimber():
         """
         Loop x amount of time through the district making small changes trying to improve the total cost
         """
-        # self.iterations = iterations
         self.no_improvement_tries = 0
         starttime = timeit.default_timer()
+        
         for iteration in range(1, iterations + 1):
             if iteration % 1000 == 0:
                 endtime = timeit.default_timer()
-                print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost},      time:{endtime - starttime}")
+                print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost}, time:{endtime - starttime}")
 
             new_district = copy.deepcopy(self.district)
             self.change(new_district)

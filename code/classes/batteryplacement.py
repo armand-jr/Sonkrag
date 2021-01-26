@@ -3,9 +3,15 @@
 import copy, random
 from code.algorithms import greedy
 
-class batteryplacement:
 
+class batteryplacement:
+    """
+    This class creates a district object and randomly places the batteries in the district
+    """
     def __init__(self, district, battery_cost, cable_cost):
+        """
+        Initializes battery placement class
+        """
         self.district = district
         self.houses = list(self.district.houses.values())
         self.house_coordinates = []
@@ -22,7 +28,11 @@ class batteryplacement:
 
         self.best_score = self.bestdistrict.total_cost(self.battery_cost, self.cable_cost)
 
+
     def run(self):
+        """
+        This randomly places the batteries 1000 times and saves the best answer calculated with the greedy algortihm
+        """
         for index in range(1000):
             if index % 100 == 0:
                 print(f"Battery coordinate change {index}/1000")
@@ -48,6 +58,7 @@ class batteryplacement:
                 self.best_score = new_score
                 bestcoordinates = copy.deepcopy(coordinates)
 
+        # rewrite battery coordinates for best coordinates
         if len(bestcoordinates) > 0:
             batteries = list(self.district.batteries.values())
 
@@ -59,8 +70,12 @@ class batteryplacement:
 
 
     def battery_locations(self):
+        """
+        Generate random battery locations
+        """
         coordinates_list = []
-        
+
+        # divide grid into 25 seperate grids and randomly take the coordinates of the middle
         while len(coordinates_list) < 5:
             randomx = random.randint(0,4)
             x_cor = int(5 + 10 * randomx)
@@ -69,12 +84,16 @@ class batteryplacement:
             y_cor = int(5 + 10 * randomy)
 
             coordinate = f"{x_cor},{y_cor}"
-
+            
+            # if there is no house on the battery location, create battery coordinates
             if coordinate not in coordinates_list and coordinate not in self.house_coordinates:
                 coordinates_list.append(coordinate)
-        
         return coordinates_list
 
+
     def get_house_locations(self):
+        """
+        Put coordinates of the houses in a list
+        """
         for house in self.houses:
             self.house_coordinates.append(f"{house.x_cor},{house.y_cor}")

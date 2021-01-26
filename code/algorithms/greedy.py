@@ -1,4 +1,4 @@
-########################################################################
+##########################################################################
 #
 # greedy.py from SONKRAG
 # Armand Stiens, Willem Folkers, Dionne Ruigrok
@@ -6,7 +6,7 @@
 # Minor Programmeren UvA 2021
 # 
 # - Makes a first solution with a greedy algorithm and tries to improve it
-########################################################################
+##########################################################################
 
 from code.classes import district, house, battery
 import random
@@ -44,13 +44,10 @@ class Greedy:
         for battery in batteries:
             if batteries.get(battery).used_cap > batteries.get(battery).max_cap:
                 for newbattery in batteries:
-                    if batteries.get(newbattery).used_cap < batteries.get(newbattery).max_cap and newbattery != battery:
-
-                        if bat_or_house == 'change_battery':
-                            self.district.check_space_battery(batteries.get(battery), batteries.get(newbattery))
-
-                        else:
-                            self.district.swap_house(batteries.get(battery), batteries.get(newbattery))
+                    if batteries.get(newbattery).used_cap < batteries.get(newbattery).max_cap and newbattery != battery and bat_or_house == 'change_battery':
+                        self.district.check_space_battery(batteries.get(battery), batteries.get(newbattery))
+                    else:
+                        self.district.swap_house(batteries.get(battery), batteries.get(newbattery))
 
 
     def improve_battery_distances(self):
@@ -61,8 +58,8 @@ class Greedy:
         
         for battery in batteries:
             for newbattery in batteries:
-                    if newbattery != battery:
-                        self.district.house_swap_with_improvement(batteries.get(battery), batteries.get(newbattery))
+                if newbattery != battery:
+                    self.district.house_swap_with_improvement(batteries.get(battery), batteries.get(newbattery))
 
                                     
     def least_used_cap(self, batteries):
@@ -71,6 +68,7 @@ class Greedy:
         """
         rest_value = 0
         battery_biggest_rest = None
+
         for battery in batteries:
             if batteries.get(battery).max_cap - batteries.get(battery).used_cap > rest_value:
                 rest_value = batteries.get(battery).max_cap - batteries.get(battery).used_cap
@@ -84,6 +82,7 @@ class Greedy:
         """
         shortest_distance = 0
         nearest_battery = None
+
         for battery in batteries:
             if batteries.get(battery).capacitycheck(house.output):
                 distance = abs(batteries.get(battery).x_cor - house.x_cor) + abs(batteries.get(battery).y_cor - house.y_cor)
@@ -91,17 +90,16 @@ class Greedy:
                 if shortest_distance == 0:
                     shortest_distance = distance
                     nearest_battery = batteries.get(battery)
-                else:
-                    if distance < shortest_distance:
-                        shortest_distance = distance
-                        nearest_battery = batteries.get(battery)
+                elif distance < shortest_distance:
+                    shortest_distance = distance
+                    nearest_battery = batteries.get(battery)
 
         if nearest_battery == None:
             nearest_battery = self.least_used_cap(batteries)
 
         return nearest_battery
 
-
+        
     def total_cost(self):
         """
         Calculates the total cost of the cables by calculating the shortest distance between the battery and the assigned houses
