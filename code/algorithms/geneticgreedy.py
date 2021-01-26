@@ -1,13 +1,13 @@
-########################################################################
+####################################################################################################################
 #
 # genetic.py from SONKRAG
 # Armand Stiens, Willem Folkers, Dionne Ruigrok
 # 
 # Minor Programmeren UvA 2021
 # 
-# - ...
-# - ...
-########################################################################
+# - Makes n random solution and tries to improve with the geneticgreedy algorithm and returns the best solution
+# - Also improves the population with the hillclimber algorithm
+####################################################################################################################
 
 import copy, random, timeit
 from code.algorithms import random as random_algo
@@ -15,8 +15,13 @@ from code.algorithms import hillclimber
 
 
 class GeneticGreedy():
-
+    """
+    Implements a geneticgreedy algorithm 
+    """
     def __init__(self, district, cable_cost, battery_cost, population_size):
+        """
+        Initializes genetic object
+        """
         self.district_population = []
         self.cost_populations = []
         self.population_size = population_size
@@ -33,6 +38,7 @@ class GeneticGreedy():
         self.cable_cost = cable_cost
         self.battery_cost = battery_cost
 
+        # generate n random different solutions
         while len(self.district_population) < self.population_size:
             while True:
                 self.district = copy.deepcopy(district)
@@ -44,6 +50,7 @@ class GeneticGreedy():
                 if self.district not in self.district_population:
                     break
 
+            # generate total cost and append to list
             self.district.total_cost(self.battery_cost, self.cable_cost)
             self.district_population.append(self.district)
             self.cost_populations.append(self.district.cost_shared)
@@ -51,7 +58,7 @@ class GeneticGreedy():
 
     def improve_population(self):
         """
-        
+        Improves the population with a hillclimber algorithm
         """
         for index in range(len(self.district_population)):
             district = self.district_population[index]
@@ -62,7 +69,7 @@ class GeneticGreedy():
 
     def sort_values(self):
         """
-        
+        Split districts into best and worst district based on total cost
         """
         for loopindex in range(0, self.population_size):
             index = self.cost_populations.index(min(self.cost_populations))
@@ -79,7 +86,7 @@ class GeneticGreedy():
 
     def make_parents(self):
         """
-        
+        Make parents of 60% of population, 2/3 from best and 1/3 from worst
         """
         self.parents = []
         
@@ -97,7 +104,7 @@ class GeneticGreedy():
 
     def parents_loop(self):
         """
-        
+        Make pairs of parents and create 2 children
         """
         while len(self.parents) > 0:
             children = 0
@@ -127,7 +134,7 @@ class GeneticGreedy():
     
     def battery_loop(self):
         """
-        TODO batterieschild -. batteries_child
+        Compare batteries and assign battery to house if different
         """
         batteries1 = self.parent1.batteries
         batteries2 = self.parent2.batteries
@@ -141,7 +148,7 @@ class GeneticGreedy():
     
     def compare_battery(self, battery1, battery2, batterieschild):
         """
-        
+        If the battery assigned to a house is different for each parent return not assigned
         """
         not_assigned = []
         
@@ -154,7 +161,7 @@ class GeneticGreedy():
 
     def assign_battery(self, old_battery, not_assigned):
         """
-        
+        If house in child district has no assigned battery, 80% keeps parent1 battery, else 50/50 chance for closest or random battery
         """
         for house in not_assigned:
             # new_battery = self.clocest_battery(old_battery, house)
@@ -169,7 +176,7 @@ class GeneticGreedy():
 
     def clocest_battery(self, old_battery, house):
         """
-        TODO clocest!!! -> closest 
+        Searches for the closest battery and return that battery
         """
         batteries = self.child.batteries
         nearest_battery = None
@@ -188,15 +195,15 @@ class GeneticGreedy():
         return nearest_battery
 
 
-    def run(self):
+    def run(self, no_improv_gen):
         """
-        
+        Runs the algorithm and the algorithm breaks after n times not finding a new best 
         """
         bestvalue = min(self.cost_populations)
         no_improvement_tries = 0
         starttime = timeit.default_timer()
 
-        while no_improvement_tries < 100:
+        while no_improvement_tries < no_improv_gen:
             endtime = timeit.default_timer()
             print(f"Best value: {bestvalue}, no improvement tries: {no_improvement_tries}, time:{endtime - starttime}")
 
@@ -205,6 +212,7 @@ class GeneticGreedy():
             self.make_parents()
             self.parents_loop()
             
+            # add best of the old population to the population
             while len(self.district_population) < self.population_size:
                 index = self.best_costs.index(min(self.best_costs))
                 self.cost_populations.append(self.best_costs[index])

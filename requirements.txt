@@ -1,0 +1,4 @@
+# requirements for the application:
+
+matplotlib==3.3.3
+pip==21.0

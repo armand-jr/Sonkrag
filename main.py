@@ -92,13 +92,29 @@ if __name__ == "__main__":
         Greedy algorithm
         """
         print("greedy algorithm chosen")
-        answer = greedy.Greedy(district, CABLECOST, BATTERYCOST)
-        answer.house_loop()
-        answer.change_battery_or_house('change_battery')
-        answer.change_battery_or_house('change_house')
-        answer.improve_battery_distances()
-        answer.district.total_cost(BATTERYCOST, CABLECOST)
-        print(f"total cost: {answer}")
+        starttime = timeit.default_timer()
+        bestdistrict = district
+        best_costs = 0
+        
+        for i in range(1, 180001):
+            temporarydistrict = copy.deepcopy(district)
+            answer = greedy.Greedy(temporarydistrict, CABLECOST, BATTERYCOST)
+            answer.house_loop()
+            answer.change_battery_or_house('change_battery')
+            answer.change_battery_or_house('change_house')
+            answer.improve_battery_distances()
+            answer.district.total_cost(BATTERYCOST, CABLECOST)
+
+            if best_costs == 0 or temporarydistrict.cost_shared < best_costs:
+                best_costs = temporarydistrict.cost_shared
+                bestdistrict = temporarydistrict
+
+            endtime = timeit.default_timer()
+            print(f"total cost: {answer}, run:{i}/180000, endtime: {endtime - starttime}")
+        
+        district = bestdistrict
+
+        print(f"total cost: {district.cost_shared}")
 
 
     elif argv[1] == "hillclimber":
@@ -170,7 +186,7 @@ if __name__ == "__main__":
         Genetic algorithm with greedy
         """
         answer = geneticgreedy.GeneticGreedy(district, CABLECOST, BATTERYCOST, GENETIC_POPULATION_SIZE)
-        district = answer.run()
+        district = answer.run(NO_IMPROV_GEN)
 
 
     elif argv[1] == "genetichillclimber":

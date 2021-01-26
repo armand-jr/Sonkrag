@@ -7,7 +7,7 @@ from code.classes import district, house, battery
 
 def make_json(district, filename, current_district):
         """
-        TODO
+        Makes a json file of the district solution
         """
         jsonfile = [{"district": int(current_district),
         "costs-shared": district.cost_shared}
@@ -30,6 +30,3 @@ def make_json(district, filename, current_district):
 
         with open(filename, "w") as fp:
                 json.dump(jsonfile, fp, indent=4)
-
-        # with open("results/output.json", "w") as fp:
-        #         json.dump(jsonfile, fp, indent=4)

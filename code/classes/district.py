@@ -138,6 +138,9 @@ class District():
 
 
     def house_swap_with_improvement(self, old_battery, new_battery):
+        """
+        Loops through houses checking if swapping houses improves the solution
+        """
         while True:
             improvement = 0
             houseswap1 = None
@@ -223,6 +226,9 @@ class District():
     
 
     def double_cable_route(self, battery, cable_x, cable_y, new_house):
+        """
+        If a cable is attached to another cable follow the route of the other cable
+        """
         cable_list = []
         index = 0
         for house in battery.houses:
@@ -233,7 +239,8 @@ class District():
         while f"{cable_x},{cable_y}" != cable_list[index]:
             index +=1
 
-        for index2 in range(index + 1,len(cable_list)): #Plus 1 om er voor te zorgen dat het eerste punt niet dubbel in de kabellijst staat
+        # add 1 to avoid double cables in the cable list
+        for index2 in range(index + 1,len(cable_list)):
             new_house.cables.append(cable_list[index2])
             battery.add_cable(cable_list[index2])
 
@@ -246,12 +253,12 @@ class District():
         best_distance= battery_distance 
         best_x_cor = 0
         best_y_cor = 0
+
         for cable in battery.cables:
             temp_cable = cable.split(',')
             temp_cable = [int(temp_cable2) for temp_cable2 in temp_cable]
-            
-           
             distance = abs(temp_cable[0] - new_house.x_cor) + abs(temp_cable[1] - new_house.y_cor)
+            
             if distance < best_distance:
                 best_distance = distance
                 best_x_cor = temp_cable[0]
@@ -263,28 +270,28 @@ class District():
 
             # cable from cable to battery
             self.double_cable_route(battery, best_x_cor, best_y_cor, new_house)
-
-
             return True
-        else:
-            return False
+            
+        return False
 
 
-    # own costs
     def total_cost(self, battery_cost, cable_cost):
+        """
+        Calculates the total cost of the district, by searching for unique cable, battery combos
+        """
         batteries = self.batteries
         cableslength = 0
         total_cost = 0
         cables = []
+
+        # searches for all unique cable, battery combos
         for battery in batteries:
             houses = batteries.get(battery).houses
+
             for house in houses:
                 cable_battery_combos = [(cable, battery) for cable in house.cables]
                 cables.extend(cable_battery_combos)
-                #cableslength = cableslength + len(house.cables)
-            
-            #cableslength = cableslength - batteries.get(battery).double_cables_length
-
+                
         cables = list(set(cables))
         cableslength = len(cables)
         total_cost += cableslength * cable_cost
@@ -295,6 +302,9 @@ class District():
     
 
     def __eq__(self, other):
+        """
+        Compares two district object with each other
+        """
         if not isinstance(other, District):
             # don't attempt to compare against unrelated types
             return NotImplemented
@@ -308,6 +318,9 @@ class District():
 
 
     def house_check(self, house, houses):
+        """
+        Check if batteries have the same houses
+        """
         for index in range(len(houses)):
             if house.id == houses[index]:
                 return self.cable_check(house, houses[index])
@@ -316,6 +329,9 @@ class District():
 
 
     def cable_check(self, house1, house2):
+        """
+        Checks if cableroutes are the same
+        """
         if len(house1.cables) != len(house2.cables):
             return False
         
