@@ -11,6 +11,7 @@
 import copy, random, timeit
 from code.algorithms import random as random_algo
 
+
 class Genetic():
     """
     Implements a genetic algorithm 
@@ -72,7 +73,7 @@ class Genetic():
 
     def make_parents(self):
         """
-        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Make parents of 60% of population, 2/3 from best and 1/3 from worst
         """
         self.parents = []
         
@@ -90,7 +91,7 @@ class Genetic():
 
     def parents_loop(self):
         """
-        
+        Make pairs of parents and create 2 children
         """
         while len(self.parents) > 0:
             children = 0
@@ -119,7 +120,7 @@ class Genetic():
     
     def battery_loop(self):
         """
-        
+        Compare batteries and assign battery to house if different
         """
         batteries1 = self.parent1.batteries
         batteries2 = self.parent2.batteries
@@ -133,7 +134,7 @@ class Genetic():
     
     def compare_battery(self, battery1, battery2, batterieschild):
         """
-        
+        If the battery assigned to a house is different for each parent return not assigned
         """
         not_assigned = []
         
@@ -146,23 +147,23 @@ class Genetic():
 
     def assign_battery(self, old_battery, not_assigned):
         """
-        
+        If house in child district has no assigned battery, 80% keeps parent1 battery, else 50/50 chance for closest or random battery
         """
         for house in not_assigned:
             differentchance = random.randint(1,10)
             if differentchance <= 2:
-                random_or_clocest = random.choice(["random", "closest"])
-                if random_or_clocest == "closest":
-                    new_battery = self.clocest_battery(old_battery, house)
+                random_or_closest = random.choice(["random", "closest"])
+                if random_or_closest == "closest":
+                    new_battery = self.closest_battery(old_battery, house)
                 else:
                     new_battery = random.choice(list(self.child.batteries.values()))
 
                 self.child.swap_battery(old_battery, new_battery, house)
 
 
-    def clocest_battery(self, old_battery, house):
+    def closest_battery(self, old_battery, house):
         """
-        
+        Searches for the closest battery and return that battery
         """
         batteries = self.child.batteries
         nearest_battery = None
@@ -181,15 +182,15 @@ class Genetic():
         return nearest_battery
 
  
-    def run(self):
+    def run(self, no_improv_gen):
         """
-        
+        Runs the algorithm and the algorithm breaks after n times not finding a new best 
         """
         bestvalue = min(self.cost_populations)
         no_improvement_tries = 0
         starttime = timeit.default_timer()
 
-        while no_improvement_tries < 250:
+        while no_improvement_tries < no_improv_gen:
             endtime = timeit.default_timer()
             print(f"Best value: {bestvalue}, no improvement tries: {no_improvement_tries}, time:{endtime - starttime}")
 
@@ -197,6 +198,7 @@ class Genetic():
             self.make_parents()
             self.parents_loop()
             
+            # add best of the old population to the population
             while len(self.district_population) < self.population_size:
                 index = self.best_costs.index(min(self.best_costs))
                 self.cost_populations.append(self.best_costs[index])

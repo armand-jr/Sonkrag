@@ -26,6 +26,7 @@ BATTERYCOST = 5000
 ITERATIONS = 250000
 HILL_ITERATIONS = 2
 GENETIC_POPULATION_SIZE = 100
+NO_IMPROV_GEN = 250
 
 
 if __name__ == "__main__":
@@ -161,7 +162,7 @@ if __name__ == "__main__":
         Genetic algorithm with random and greedy
         """
         answer = genetic.Genetic(district, CABLECOST, BATTERYCOST, GENETIC_POPULATION_SIZE)
-        district = answer.run()
+        district = answer.run(NO_IMPROV_GEN)
 
 
     elif argv[1] == "geneticgreedy":
@@ -177,7 +178,7 @@ if __name__ == "__main__":
         Genetic hillclimber
         """
         answer = genetic.Genetic(district, CABLECOST, BATTERYCOST, GENETIC_POPULATION_SIZE)
-        district = answer.run()
+        district = answer.run(NO_IMPROV_GEN)
 
         bestvalue = district.total_cost(BATTERYCOST, CABLECOST)
         bestdistrict = district
