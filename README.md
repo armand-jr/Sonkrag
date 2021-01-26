@@ -77,6 +77,7 @@ To run the written program type in:
 * 2
 * 3  
 
+### Additional data info
 In district-1_batteries.csv, district-2_batteries.csv and district-3_batteries.csv change coordinates from example "30,14" to 30,14
 
 ### Outline  
