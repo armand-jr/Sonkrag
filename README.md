@@ -64,7 +64,7 @@ All coding has been written in Python 3.7. We made use of the following packages
 ### Use  
 To run the written program type in:  
 ‘python main.py [algorithm] [district number] [basis/advanced5]’  
-algorithms:
+#### Algorithms:
 * random
 * greedy
 * hillclimber
@@ -72,7 +72,7 @@ algorithms:
 * genetic
 * geneticgreedy
 * genetichillclimber  
-district number:
+#### District number:
 * 1
 * 2
 * 3  
