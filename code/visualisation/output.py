@@ -31,5 +31,5 @@ def make_json(district, filename, current_district):
         with open(filename, "w") as fp:
                 json.dump(jsonfile, fp, indent=4)
 
-        with open("results/output.json", "w") as fp:
-                json.dump(jsonfile, fp, indent=4)
+        # with open("results/output.json", "w") as fp:
+        #         json.dump(jsonfile, fp, indent=4)

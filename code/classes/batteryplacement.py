@@ -1,7 +1,7 @@
 # Armand Stiens, Willem Folkers, Dionne Ruigrok
 
 import copy, random
-from code.algorithms import greedy2
+from code.algorithms import greedy
 
 class batteryplacement:
 
@@ -15,7 +15,7 @@ class batteryplacement:
         self.battery_cost = battery_cost
         self.cable_cost = cable_cost
 
-        answer = greedy2.Greedy2(self.bestdistrict, cable_cost, battery_cost)
+        answer = greedy.Greedy(self.bestdistrict, cable_cost, battery_cost)
         answer.house_loop()
         answer.change_battery_or_house('change_battery')
         answer.change_battery_or_house('change_house')
@@ -37,7 +37,7 @@ class batteryplacement:
                 batteries[batteryindex].x_cor = int(coordinate[0])
                 batteries[batteryindex].y_cor = int(coordinate[1])
             
-            answer = greedy2.Greedy2(new_district, self.cable_cost, self.battery_cost)
+            answer = greedy.Greedy(new_district, self.cable_cost, self.battery_cost)
             answer.house_loop()
             answer.change_battery_or_house('change_battery')
             answer.change_battery_or_house('change_house')

@@ -5,14 +5,13 @@
 # 
 # Minor Programmeren UvA 2021
 # 
-# - ...
-# - ...
+# - Makes n random solution and tries to improve and get the solution
 ########################################################################
 
 import copy, random, timeit
-from code.algorithms import random2
+from code.algorithms import random as random_algo
 
-class Genetic(random2.Random2):
+class Genetic():
 
     def __init__(self, district, cable_cost, battery_cost, population_size):
         self.district_population = []
@@ -34,7 +33,7 @@ class Genetic(random2.Random2):
         while len(self.district_population) < self.population_size:
             while True:
                 self.district = copy.deepcopy(district)
-                firstsolution = random2.Random2(self.district, cable_cost, battery_cost)
+                firstsolution = random_algo.Random(self.district, cable_cost, battery_cost)
                 firstsolution.house_loop()
                 firstsolution.change_battery_or_house('change_battery')
                 firstsolution.change_battery_or_house('change_house')
@@ -48,6 +47,9 @@ class Genetic(random2.Random2):
 
 
     def sort_values(self):
+        """
+
+        """
         for loopindex in range(0, self.population_size):
             index = self.cost_populations.index(min(self.cost_populations))
             
@@ -62,6 +64,9 @@ class Genetic(random2.Random2):
     
 
     def make_parents(self):
+        """
+        
+        """
         self.parents = []
         
         for loopindex in range(0, int(self.population_size * 0.6)):
@@ -77,6 +82,9 @@ class Genetic(random2.Random2):
     
 
     def parents_loop(self):
+        """
+        
+        """
         while len(self.parents) > 0:
             children = 0
             self.parent1 = random.choice(self.parents)
@@ -91,7 +99,7 @@ class Genetic(random2.Random2):
                 
                 self.battery_loop()
 
-                childsolution = random2.Random2(self.child, self.cable_cost, self.battery_cost)
+                childsolution = random_algo.Random(self.child, self.cable_cost, self.battery_cost)
                 childsolution.change_battery_or_house('change_battery')
                 childsolution.change_battery_or_house('change_house')
 
@@ -103,6 +111,9 @@ class Genetic(random2.Random2):
     
     
     def battery_loop(self):
+        """
+        
+        """
         batteries1 = self.parent1.batteries
         batteries2 = self.parent2.batteries
         batterieschild = self.child.batteries
@@ -114,6 +125,9 @@ class Genetic(random2.Random2):
     
     
     def compare_battery(self, battery1, battery2, batterieschild):
+        """
+        
+        """
         not_assigned = []
         
         for index in range(len(battery1.houses)):
@@ -124,6 +138,9 @@ class Genetic(random2.Random2):
 
 
     def assign_battery(self, old_battery, not_assigned):
+        """
+        
+        """
         for house in not_assigned:
             differentchance = random.randint(1,10)
             if differentchance <= 2:
@@ -137,6 +154,9 @@ class Genetic(random2.Random2):
 
 
     def clocest_battery(self, old_battery, house):
+        """
+        
+        """
         batteries = self.child.batteries
         nearest_battery = None
         shortest_distance = 0
@@ -153,10 +173,11 @@ class Genetic(random2.Random2):
                     nearest_battery = batteries.get(battery)
         return nearest_battery
 
-        
-
  
     def run(self):
+        """
+        
+        """
         bestvalue = min(self.cost_populations)
         no_improvement_tries = 0
         starttime = timeit.default_timer()

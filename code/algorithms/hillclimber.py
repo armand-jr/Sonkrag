@@ -1,49 +1,47 @@
 ########################################################################
 #
-# hillclimber_random2.py from SONKRAG
+# hillclimber_random.py from SONKRAG
 # Armand Stiens, Willem Folkers, Dionne Ruigrok
 # 
 # Minor Programmeren UvA 2021
 # 
-# - ...
-# - ...
+# - Tries to improve a given solution with the hillclimber algorithm
 ########################################################################
+import copy, random, timeit
 
-import copy, random
-from code.algorithms import greedy2
 
-class HillClimber(greedy2.Greedy2):
+class HillClimber():
     """
     Implements a Hill Climber algorithm which makes a random change to the solution. If there is a improvement, the new solution is kept.
     """
 
     def __init__(self, district, cable_cost, battery_cost):
-        """
-        Initializes the Hillclimber2 object
-        """
-        if not district.valid_solution():
-            raise Exception("HillClimber needs a complete solution. Please run the random algorithm first")
-
         self.district = copy.deepcopy(district)
         self.cable_cost = cable_cost
         self.battery_cost = battery_cost
         self.no_improvement_tries = 0
         self.total_cost = district.total_cost(battery_cost, cable_cost)
 
+
     def change(self, new_district):
         """
         Picks two random batteries, picks one house per battery and swaps them if possible
         """
-        random_battery1 = random.choice(list(new_district.batteries.values()))
-
-        # if both random batteries are the same choose another one
         while True:
-            random_battery2 = random.choice(list(new_district.batteries.values()))
-            if random_battery1.id != random_battery2.id:
-                break
+            random_battery1 = random.choice(list(new_district.batteries.values()))
 
-        random_house1 = random.choice(random_battery1.houses)
-        random_house2 = random.choice(random_battery2.houses)
+            # if both random batteries are the same choose another one
+            while True:
+                random_battery2 = random.choice(list(new_district.batteries.values()))
+                if random_battery1.id != random_battery2.id:
+                    break
+
+            random_house1 = random.choice(random_battery1.houses)
+            random_house2 = random.choice(random_battery2.houses)
+
+            if (random_battery1.used_cap - random_house1.output + random_house2.output < random_battery1.max_cap
+            and random_battery2.used_cap - random_house2.output + random_house1.output < random_battery2.max_cap):
+                break
 
         # removes house from old battery and adds it to the new battery, deleting old path and making a new one
         new_district.swap_battery(random_battery1, random_battery2, random_house1)
@@ -74,15 +72,17 @@ class HillClimber(greedy2.Greedy2):
         """
         # self.iterations = iterations
         self.no_improvement_tries = 0
+        starttime = timeit.default_timer()
         for iteration in range(1, iterations + 1):
-            if iteration % 500 == 0:
-                print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost}")
+            if iteration % 1000 == 0:
+                endtime = timeit.default_timer()
+                print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost},      time:{endtime - starttime}")
 
             new_district = copy.deepcopy(self.district)
             self.change(new_district)
             self.compare(new_district)
 
-            if self.no_improvement_tries >= 50000:
+            if self.no_improvement_tries >= 100000:
                 break
         
         return self.district
