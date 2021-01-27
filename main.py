@@ -222,15 +222,15 @@ if __name__ == "__main__":
 
     # --------------------------- Make filename ---------------------------
     if argv[3] == "advanced5":
-            filename = f"results/result_{argv[1]}_district{current_district}{argv[3]}"
+            filename = f"result_{argv[1]}_district{current_district}{argv[3]}"
     else:
-        filename = f"results/result_{argv[1]}_district{current_district}"
+        filename = f"result_{argv[1]}_district{current_district}"
     total_cost = district.total_cost(BATTERYCOST, CABLECOST)
 
 
     # --------------------------- Visualisation ---------------------------
-    vis.visualise(district, argv[1], argv[2], total_cost, f"{filename}.png", argv[3])
+    vis.visualise(district, argv[1], argv[2], total_cost, f"results/images/{filename}.png", argv[3])
 
 
     # --------------------------- Output JSON -----------------------------
-    output.make_json(district, f"{filename}.json", current_district)
+    output.make_json(district, f"results/{filename}.json", current_district)
