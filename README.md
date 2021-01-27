@@ -93,7 +93,7 @@ To sum up the outline of the most important folders and files, see the following
 *   Dionne Ruigrok  
 *   Willem Folkers  
 
-This README file was inspired by the [RadioRussia case written by the assistants of the minor programming at UvA] (https://github.com/Qvdpost/RadioRussia/tree/3c6633eab040a30cfd80f27dcb9f237a0bb08227).  
+This README file was inspired by the [RadioRussia case written by the assistants of the minor programming at UvA](https://github.com/Qvdpost/RadioRussia/tree/3c6633eab040a30cfd80f27dcb9f237a0bb08227).  
 
 
 ![UML](docs/images/DESIGN.png)  
