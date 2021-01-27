@@ -164,17 +164,17 @@ class Genetic_Pop_HC():
         If house in child district has no assigned battery, 80% keeps parent1 battery, else 50/50 chance for closest or random battery
         """
         for house in not_assigned:
-            # new_battery = self.clocest_battery(old_battery, house)
-            random_or_clocest = random.choice(["random", "closest"])
-            if random_or_clocest == "closest":
-                new_battery = self.clocest_battery(old_battery, house)
+            # new_battery = self.closest_battery(old_battery, house)
+            random_or_closest = random.choice(["random", "closest"])
+            if random_or_closest == "closest":
+                new_battery = self.closest_battery(old_battery, house)
             else:
                 new_battery = random.choice(list(self.child.batteries.values()))
 
             self.child.swap_battery(old_battery, new_battery, house)
 
 
-    def clocest_battery(self, old_battery, house):
+    def closest_battery(self, old_battery, house):
         """
         Searches for the closest battery and return that battery
         """
