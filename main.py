@@ -24,10 +24,10 @@ import timeit, copy
 CABLECOST = 9
 BATTERYCOST = 5000
 ITERATIONS = 250000
-HILL_ITERATIONS = 2
+HILL_ITERATIONS = 5
 GENETIC_POPULATION_SIZE = 100
 NO_IMPROV_HILL = 80000
-NO_IMPROV_GEN = 250
+NO_IMPROV_GEN = 100
 
 
 
@@ -234,4 +234,3 @@ if __name__ == "__main__":
 
     # --------------------------- Output JSON -----------------------------
     output.make_json(district, f"results/{filename}.json", current_district)
-    

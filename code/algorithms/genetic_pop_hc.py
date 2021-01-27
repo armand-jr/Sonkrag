@@ -5,7 +5,7 @@
 # 
 # Minor Programmeren UvA 2021
 # 
-# - Makes n random solution and tries to improve with the genetic_pop_hc algorithm and returns the best solution
+# - Makes n random solution and tries to improve with the genetic population hillclimber algorithm and returns the best solution
 # - Also improves the population with the hillclimber algorithm
 ####################################################################################################################
 
