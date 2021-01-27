@@ -5,7 +5,7 @@
 # 
 # Minor Programmeren UvA 2021
 # 
-# - Makes n random solution and tries to improve with the geneticgreedy algorithm and returns the best solution
+# - Makes n random solution and tries to improve with the genetic_pop_hc algorithm and returns the best solution
 # - Also improves the population with the hillclimber algorithm
 ####################################################################################################################
 
@@ -14,9 +14,9 @@ from code.algorithms import random as random_algo
 from code.algorithms import hillclimber
 
 
-class GeneticGreedy():
+class Genetic_Pop_HC():
     """
-    Implements a geneticgreedy algorithm 
+    Implements a genetic population hillclimber algorithm 
     """
     def __init__(self, district, cable_cost, battery_cost, population_size):
         """
@@ -63,7 +63,7 @@ class GeneticGreedy():
         for index in range(len(self.district_population)):
             district = self.district_population[index]
             districtsolution = hillclimber.HillClimber(district, self.cable_cost, self.battery_cost)
-            self.district_population[index] = districtsolution.run(1000)
+            self.district_population[index] = districtsolution.run(1000, 80000)
             self.cost_populations[index] = district.total_cost(self.battery_cost, self.cable_cost)
 
 

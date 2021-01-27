@@ -13,7 +13,7 @@
 
 
 from code.classes import district, house, battery, batteryplacement
-from code.algorithms import greedy, random, hillclimber, genetic, geneticgreedy
+from code.algorithms import greedy, random, hillclimber, genetic, genetic_pop_hc
 from code.visualisation import visualise as vis
 from code.visualisation import output
 from sys import argv
@@ -26,7 +26,9 @@ BATTERYCOST = 5000
 ITERATIONS = 250000
 HILL_ITERATIONS = 2
 GENETIC_POPULATION_SIZE = 100
+NO_IMPROV_HILL = 80000
 NO_IMPROV_GEN = 250
+
 
 
 if __name__ == "__main__":
@@ -133,7 +135,7 @@ if __name__ == "__main__":
         for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
             print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
             districthillclimber = hillclimber.HillClimber(district, CABLECOST, BATTERYCOST)
-            temporarydistrict = districthillclimber.run(ITERATIONS)
+            temporarydistrict = districthillclimber.run(ITERATIONS, NO_IMPROV_HILL)
 
             if temporarydistrict.cost_shared < bestvalue:
                 bestdistrict = temporarydistrict
@@ -162,7 +164,7 @@ if __name__ == "__main__":
         for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
             print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
             districthillclimber = hillclimber.HillClimber(district, CABLECOST, BATTERYCOST)
-            temporarydistrict = districthillclimber.run(ITERATIONS)
+            temporarydistrict = districthillclimber.run(ITERATIONS, NO_IMPROV_HILL)
 
             # save best answer
             if temporarydistrict.cost_shared < bestvalue:
@@ -181,11 +183,11 @@ if __name__ == "__main__":
         district = answer.run(NO_IMPROV_GEN)
 
 
-    elif argv[1] == "geneticgreedy":
+    elif argv[1] == "genetic_pop_hc":
         """
         Genetic algorithm with greedy
         """
-        answer = geneticgreedy.GeneticGreedy(district, CABLECOST, BATTERYCOST, GENETIC_POPULATION_SIZE)
+        answer = genetic_pop_hc.Genetic_Pop_HC(district, CABLECOST, BATTERYCOST, GENETIC_POPULATION_SIZE)
         district = answer.run(NO_IMPROV_GEN)
 
 
@@ -204,7 +206,7 @@ if __name__ == "__main__":
         for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
             print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
             districthillclimber = hillclimber.HillClimber(district, CABLECOST, BATTERYCOST)
-            temporarydistrict = districthillclimber.run(ITERATIONS)
+            temporarydistrict = districthillclimber.run(ITERATIONS, NO_IMPROV_HILL)
             
             # save best answer
             if temporarydistrict.cost_shared < bestvalue:

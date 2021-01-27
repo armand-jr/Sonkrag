@@ -275,32 +275,6 @@ class District():
         return False
 
 
-    def total_cost(self, battery_cost, cable_cost):
-        """
-        Calculates the total cost of the district, by searching for unique cable, battery combos
-        """
-        batteries = self.batteries
-        cableslength = 0
-        total_cost = 0
-        cables = []
-
-        # searches for all unique cable, battery combos
-        for battery in batteries:
-            houses = batteries.get(battery).houses
-
-            for house in houses:
-                cable_battery_combos = [(cable, battery) for cable in house.cables]
-                cables.extend(cable_battery_combos)
-                
-        cables = list(set(cables))
-        cableslength = len(cables)
-        total_cost += cableslength * cable_cost
-        total_cost += battery_cost * len(batteries)
-
-        self.cost_shared = total_cost
-        return total_cost
-    
-
     def __eq__(self, other):
         """
         Compares two district object with each other
@@ -341,3 +315,29 @@ class District():
                 return False
         
         return True
+
+    
+    def total_cost(self, battery_cost, cable_cost):
+        """
+        Calculates the total cost of the district, by searching for unique cable, battery combos
+        """
+        batteries = self.batteries
+        cableslength = 0
+        total_cost = 0
+        cables = []
+
+        # searches for all unique cable, battery combos
+        for battery in batteries:
+            houses = batteries.get(battery).houses
+
+            for house in houses:
+                cable_battery_combos = [(cable, battery) for cable in house.cables]
+                cables.extend(cable_battery_combos)
+                
+        cables = list(set(cables))
+        cableslength = len(cables)
+        total_cost += cableslength * cable_cost
+        total_cost += battery_cost * len(batteries)
+
+        self.cost_shared = total_cost
+        return total_cost
