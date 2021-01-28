@@ -24,7 +24,7 @@ import timeit, copy
 CABLECOST = 9
 BATTERYCOST = 5000
 ITERATIONS = 250000
-HILL_ITERATIONS = 5
+HILL_ITERATIONS = 3
 GENETIC_POPULATION_SIZE = 100
 NO_IMPROV_HILL = 80000
 NO_IMPROV_GEN = 100
@@ -62,7 +62,7 @@ if __name__ == "__main__":
 
 
     # --------------------------- Algoritmhs ---------------------------
-    elif argv[1] == "random":
+    if argv[1] == "random":
         """
         Random algorithm
         """
@@ -80,7 +80,7 @@ if __name__ == "__main__":
             answer.change_battery_or_house('change_house')
             answer.district.total_cost(BATTERYCOST, CABLECOST)
             endtime = timeit.default_timer()
-            uid += 1
+
             
             if best_value == 0 or temporarydistrict.cost_shared < best_value:
                 best_value = temporarydistrict.cost_shared
