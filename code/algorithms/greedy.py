@@ -44,10 +44,11 @@ class Greedy:
         for battery in batteries:
             if batteries.get(battery).used_cap > batteries.get(battery).max_cap:
                 for newbattery in batteries:
-                    if batteries.get(newbattery).used_cap < batteries.get(newbattery).max_cap and newbattery != battery and bat_or_house == 'change_battery':
-                        self.district.check_space_battery(batteries.get(battery), batteries.get(newbattery))
-                    else:
-                        self.district.swap_house(batteries.get(battery), batteries.get(newbattery))
+                    if batteries.get(newbattery).used_cap < batteries.get(newbattery).max_cap and newbattery != battery:
+                        if bat_or_house == 'change_battery':
+                            self.district.check_space_battery(batteries.get(battery), batteries.get(newbattery))
+                        else:
+                            self.district.swap_house(batteries.get(battery), batteries.get(newbattery))
 
 
     def improve_battery_distances(self):

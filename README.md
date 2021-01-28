@@ -35,7 +35,7 @@ Three dummy-districts want to catch the excess of energy that are produced by so
       1. if houses have the same battery keep the battery
 	  2. if battery is different change 20% to random or closest battery, 80% keeps the battery of parent1
 
-### Geneticgreedy
+### Genetic_Pop_HC
 1. Make n random different start solutions
 2. Loop until no improvements where found n times in a row
    1. Improve the population with hillclimber algorithm
@@ -70,7 +70,7 @@ To run the written program type in:
 * hillclimber
 * hillclimbergreedy
 * genetic
-* geneticgreedy
+* genetic_pop_hc
 * genetichillclimber  
 #### District number:
 * 1
@@ -93,7 +93,7 @@ To sum up the outline of the most important folders and files, see the following
 *   Dionne Ruigrok  
 *   Willem Folkers  
 
-This README file was inspired by the [RadioRussia case written by the assistants of the minor programming at UvA] (https://github.com/Qvdpost/RadioRussia/tree/3c6633eab040a30cfd80f27dcb9f237a0bb08227).  
+This README file was inspired by the [RadioRussia case written by the assistants of the minor programming at UvA](https://github.com/Qvdpost/RadioRussia/tree/3c6633eab040a30cfd80f27dcb9f237a0bb08227).  
 
 
 ![UML](docs/images/DESIGN.png)  

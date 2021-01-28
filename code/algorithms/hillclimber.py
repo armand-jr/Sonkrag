@@ -68,7 +68,7 @@ class HillClimber():
                 self.total_cost = new_total_cost
 
 
-    def run(self, iterations):
+    def run(self, iterations, no_improv_hill):
         """
         Loop x amount of time through the district making small changes trying to improve the total cost
         """
@@ -76,7 +76,7 @@ class HillClimber():
         starttime = timeit.default_timer()
         
         for iteration in range(1, iterations + 1):
-            if iteration % 1000 == 0:
+            if iteration % 5000 == 0:
                 endtime = timeit.default_timer()
                 print(f"Iteration: {iteration}/{iterations}, current best cost: {self.total_cost}, time:{endtime - starttime}")
 
@@ -84,7 +84,7 @@ class HillClimber():
             self.change(new_district)
             self.compare(new_district)
 
-            if self.no_improvement_tries >= 100000:
+            if self.no_improvement_tries >= no_improv_hill:
                 break
         
         return self.district

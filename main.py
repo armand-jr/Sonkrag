@@ -13,7 +13,7 @@
 
 
 from code.classes import district, house, battery, batteryplacement
-from code.algorithms import greedy, random, hillclimber, genetic, geneticgreedy
+from code.algorithms import greedy, random, hillclimber, genetic, genetic_pop_hc
 from code.visualisation import visualise as vis
 from code.visualisation import output
 from sys import argv
@@ -24,9 +24,11 @@ import timeit, copy
 CABLECOST = 9
 BATTERYCOST = 5000
 ITERATIONS = 250000
-HILL_ITERATIONS = 2
+HILL_ITERATIONS = 3
 GENETIC_POPULATION_SIZE = 100
-NO_IMPROV_GEN = 250
+NO_IMPROV_HILL = 80000
+NO_IMPROV_GEN = 100
+
 
 
 if __name__ == "__main__":
@@ -60,7 +62,7 @@ if __name__ == "__main__":
 
 
     # --------------------------- Algoritmhs ---------------------------
-    elif argv[1] == "random":
+    if argv[1] == "random":
         """
         Random algorithm
         """
@@ -78,7 +80,7 @@ if __name__ == "__main__":
             answer.change_battery_or_house('change_house')
             answer.district.total_cost(BATTERYCOST, CABLECOST)
             endtime = timeit.default_timer()
-            uid += 1
+
             
             if best_value == 0 or temporarydistrict.cost_shared < best_value:
                 best_value = temporarydistrict.cost_shared
@@ -133,7 +135,7 @@ if __name__ == "__main__":
         for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
             print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
             districthillclimber = hillclimber.HillClimber(district, CABLECOST, BATTERYCOST)
-            temporarydistrict = districthillclimber.run(ITERATIONS)
+            temporarydistrict = districthillclimber.run(ITERATIONS, NO_IMPROV_HILL)
 
             if temporarydistrict.cost_shared < bestvalue:
                 bestdistrict = temporarydistrict
@@ -162,7 +164,7 @@ if __name__ == "__main__":
         for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
             print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
             districthillclimber = hillclimber.HillClimber(district, CABLECOST, BATTERYCOST)
-            temporarydistrict = districthillclimber.run(ITERATIONS)
+            temporarydistrict = districthillclimber.run(ITERATIONS, NO_IMPROV_HILL)
 
             # save best answer
             if temporarydistrict.cost_shared < bestvalue:
@@ -181,11 +183,11 @@ if __name__ == "__main__":
         district = answer.run(NO_IMPROV_GEN)
 
 
-    elif argv[1] == "geneticgreedy":
+    elif argv[1] == "genetic_pop_hc":
         """
         Genetic algorithm with greedy
         """
-        answer = geneticgreedy.GeneticGreedy(district, CABLECOST, BATTERYCOST, GENETIC_POPULATION_SIZE)
+        answer = genetic_pop_hc.Genetic_Pop_HC(district, CABLECOST, BATTERYCOST, GENETIC_POPULATION_SIZE)
         district = answer.run(NO_IMPROV_GEN)
 
 
@@ -204,7 +206,7 @@ if __name__ == "__main__":
         for hillclimberiteration in range(1, HILL_ITERATIONS + 1):
             print(f"Hillclimber run: {hillclimberiteration}/{HILL_ITERATIONS}, best value: {bestvalue}")
             districthillclimber = hillclimber.HillClimber(district, CABLECOST, BATTERYCOST)
-            temporarydistrict = districthillclimber.run(ITERATIONS)
+            temporarydistrict = districthillclimber.run(ITERATIONS, NO_IMPROV_HILL)
             
             # save best answer
             if temporarydistrict.cost_shared < bestvalue:
@@ -220,15 +222,15 @@ if __name__ == "__main__":
 
     # --------------------------- Make filename ---------------------------
     if argv[3] == "advanced5":
-            filename = f"results/result_{argv[1]}_district{current_district}{argv[3]}"
+            filename = f"result_{argv[1]}_district{current_district}{argv[3]}"
     else:
-        filename = f"results/result_{argv[1]}_district{current_district}"
+        filename = f"result_{argv[1]}_district{current_district}"
     total_cost = district.total_cost(BATTERYCOST, CABLECOST)
 
 
     # --------------------------- Visualisation ---------------------------
-    vis.visualise(district, argv[1], argv[2], total_cost, f"{filename}.png", argv[3])
+    vis.visualise(district, argv[1], argv[2], total_cost, f"results/images/{filename}.png", argv[3])
 
 
     # --------------------------- Output JSON -----------------------------
-    output.make_json(district, f"{filename}.json", current_district)
+    output.make_json(district, f"results/{filename}.json", current_district)
